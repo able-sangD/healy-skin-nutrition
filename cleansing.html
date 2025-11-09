@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>힐리 클렌징 | 힐리 스킨케어</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* 상단 버튼 */
+    .back-main {
+      display: block;
+      width: fit-content;
+      margin: 1rem auto 0;
+      background: none;
+      border: none;
+      color: #a46b4c;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.25s;
+    }
+    .back-main:hover {
+      color: #c17e59;
+      transform: scale(1.05);
+    }
+
+    /* 가격 표시 */
+    .price-tag {
+      font-weight: 700;
+      color: #c17e59;
+      margin-top: 0.4rem;
+      font-size: 1.05rem;
+    }
+
+    /* 상단 헤더 */
+    .sub-header {
+      padding-top: 0.5rem;
+    }
+
+    /* 메인 메뉴 카드 */
+    .main-menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 2rem 1rem;
+      background: #f7f5f2;
+    }
+    .menu-card {
+      width: 280px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      text-align: center;
+      padding: 1.2rem;
+      text-decoration: none;
+      color: inherit;
+      transition: 0.25s;
+    }
+    .menu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+    .menu-card img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+    .menu-card h2 {
+      color: #a46b4c;
+      font-size: 1.2rem;
+      margin-bottom: 0.3rem;
+    }
+    .menu-card p {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="sub-header">
+    <button class="back-main" onclick="location.href='index.html'">⬅ 메인으로</button>
+    <h1>힐리 클렌징</h1>
+    <p>순하고 깨끗한 사해 미네랄 클렌징 라인</p>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-menu">
+    <!-- 미네랄 머드 솝 -->
+    <a href="cleansing_soap.html" class="menu-card">
+      <img src="assets/img/skincare/cleansing/25.png" alt="미네랄 머드 솝">
+      <h2>미네랄 머드 솝</h2>
+      <p>사해 머드의 깊은 정화력으로 깨끗한 피부결 완성</p>
+      <div class="price-tag">₩25,000</div>
+    </a>
+
+    <!-- 리바이빙 클렌징 젤 -->
+    <a href="cleansing_gel.html" class="menu-card">
+      <img src="assets/img/skincare/cleansing/26.png" alt="리바이빙 클렌징 젤">
+      <h2>리바이빙 클렌징 젤</h2>
+      <p>세안 후에도 촉촉하게, 순한 젤 타입 클렌저</p>
+      <div class="price-tag">₩39,000</div>
+    </a>
+
+    <!-- 필링 젤 -->
+    <a href="cleansing_peeling.html" class="menu-card">
+      <img src="assets/img/skincare/cleansing/27.png" alt="필링 젤">
+      <h2>필링 젤</h2>
+      <p>묵은 각질을 부드럽게 제거하고 매끈한 피부로</p>
+      <div class="price-tag">₩45,000</div>
+    </a>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 힐리 스킨케어 & 뉴트리션 | 김영숙 · 포항<br>
+    Powered by Healy World Korea</p>
+  </footer>
+
+</body>
+</html>
