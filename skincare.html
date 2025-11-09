@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>힐리 스킨케어</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* 상단 버튼 */
+    .back-main {
+      display: block;
+      width: fit-content;
+      margin: 1rem auto 0;
+      background: none;
+      border: none;
+      color: #b65f4a;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.25s;
+    }
+    .back-main:hover {
+      color: #d18874;
+      transform: scale(1.05);
+    }
+
+    /* 가격 대신 카테고리 표시용 */
+    .category-tag {
+      font-weight: 700;
+      color: #d18874;
+      margin-top: 0.4rem;
+      font-size: 1.05rem;
+    }
+
+    .sub-header {
+      padding-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="sub-header">
+    <button class="back-main" onclick="location.href='index.html'">⬅ 메인으로</button>
+    <h1>힐리 스킨케어</h1>
+    <p>사해 미네랄과 자연 주파수가 만나는 힐링 뷰티 케어</p>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-menu">
+
+    <!-- 바디 케어 -->
+    <a href="body.html" class="menu-card">
+      <img src="assets/img/skincare/body_main.png" alt="바디 케어">
+      <h2>바디 케어</h2>
+      <p>사해 미네랄로 피부를 부드럽고 건강하게</p>
+      <div class="category-tag">Body Care</div>
+    </a>
+
+    <!-- 페이셜 케어 -->
+    <a href="facial.html" class="menu-card">
+      <img src="assets/img/skincare/facial_main.jpg" alt="페이셜 케어">
+      <h2>페이셜 케어</h2>
+      <p>머드와 미네랄로 맑고 투명한 피부 밸런스</p>
+      <div class="category-tag">Facial Care</div>
+    </a>
+
+    <!-- 클렌징 -->
+    <a href="cleansing.html" class="menu-card">
+      <img src="assets/img/skincare/cleansing_main.jpg" alt="클렌징">
+      <h2>클렌징</h2>
+      <p>자연 유래 성분으로 깨끗하게, 순하게</p>
+      <div class="category-tag">Cleansing</div>
+    </a>
+
+    <!-- 바이오 스킨 -->
+    <a href="bio.html" class="menu-card">
+      <img src="assets/img/skincare/bio_main.jpg" alt="바이오 스킨">
+      <h2>바이오 스킨</h2>
+      <p>수분과 생기를 채워주는 바이오 주파수 스킨라인</p>
+      <div class="category-tag">Bio Skin</div>
+    </a>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 힐리 스킨케어 & 뉴트리션 | 김영숙 · 포항<br>
+    Powered by Healy World Korea</p>
+  </footer>
+
+</body>
+</html>
