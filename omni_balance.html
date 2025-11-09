@@ -6,6 +6,24 @@
   <title>옴니 밸런스 360° | 힐리 뉴트리션</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
+    /* 상단 버튼 */
+    .back-main {
+      display: block;
+      width: fit-content;
+      margin: 1rem auto 0;
+      background: none;
+      border: none;
+      color: #b65f4a;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.25s;
+    }
+    .back-main:hover {
+      color: #d18874;
+      transform: scale(1.05);
+    }
+
     .product-detail {
       padding: 1.8rem 1.2rem;
       max-width: 700px;
@@ -52,17 +70,58 @@
       margin: 0.6rem 0;
       font-size: 0.95rem;
     }
+    .qty-select {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+    .qty-select label {
+      color: #b65f4a;
+      font-weight: 600;
+    }
+    .qty-select input {
+      width: 70px;
+      text-align: center;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      padding: 6px;
+    }
     .buy-section {
       margin-top: 2.5rem;
       padding-top: 1.5rem;
       border-top: 1px solid #eee;
+    }
+    .price-line {
+      margin-top: 1rem;
+      font-weight: 700;
+      color: #b65f4a;
+      font-size: 1.05rem;
+    }
+    .buy-btn {
+      background: linear-gradient(135deg, #33bfa4, #009173);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: 0.25s;
+    }
+    .buy-btn:hover {
+      background: linear-gradient(135deg, #009173, #007a62);
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
 
   <header class="sub-header">
-    <h1>옴니 밸런스 360°™</h1>
+    <button class="back-main" onclick="location.href='nutrition.html'">⬅ 뉴트리션으로</button>
+    <h1>옴니 밸런스 360°</h1>
     <p>Get Your Perfect Balance, All-In-One</p>
   </header>
 
@@ -73,7 +132,7 @@
     건강 에너지 균형을 지원합니다.</p>
 
     <div class="section">
-      <h2>✨ Key Benefits</h2>
+      <h2>✨ 주요 특징</h2>
       <ul class="benefit-list">
         <li><strong>균형 잡힌 영양 포뮬러</strong> — 비타민, 미네랄, 오메가3 복합체 함유</li>
         <li><strong>하루 1회 간편 섭취</strong> — 간편한 캡슐형 포장으로 복용이 쉬움</li>
@@ -96,15 +155,43 @@
       <p>Healy 기기와 HealAdvisor App을 함께 사용하면<br> 신체 에너지 밸런스를 조화롭게 유지하는데 도움을 줍니다.</p>
     </div>
 
+    <div class="price-line">💰 가격: ₩99,000</div>
+
+    <div class="qty-select">
+      <label for="qty">수량:</label>
+      <input type="number" id="qty" min="1" value="1">
+    </div>
+
     <div class="buy-section">
-      <a href="https://naver.me/폼주소?entry.1=옴니+밸런스+360°" class="buy-btn">구매하기</a>
+      <button class="buy-btn" onclick="addToCart()">🛒 주문서에 담기</button>
     </div>
   </main>
 
   <footer>
-    <p>© 2025 힐리 스킨 & 뉴트리션 | 김영숙 · 포항<br>
+    <p>© 2025 힐리 스킨케어 & 뉴트리션 | 김영숙 · 포항<br>
     Powered by Healy World Korea</p>
   </footer>
+
+  <script>
+    function addToCart() {
+      const qty = parseInt(document.getElementById('qty').value);
+      const price = 99000;
+      const name = "옴니 밸런스 360°";
+
+      let cart = JSON.parse(localStorage.getItem('healySelections') || '[]');
+      const existing = cart.find(item => item.name === name);
+
+      if (existing) {
+        existing.qty += qty;
+        existing.total = existing.qty * existing.price;
+      } else {
+        cart.push({ name, qty, price, total: qty * price });
+      }
+
+      localStorage.setItem('healySelections', JSON.stringify(cart));
+      alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
+    }
+  </script>
 
 </body>
 </html>
