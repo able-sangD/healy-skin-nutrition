@@ -6,12 +6,30 @@
   <title>라이프 에센스 | 힐리 뉴트리션</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
+    /* 상단 버튼 */
+    .back-main {
+      display: block;
+      width: fit-content;
+      margin: 1rem auto 0;
+      background: none;
+      border: none;
+      color: #b65f4a;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.25s;
+    }
+    .back-main:hover {
+      color: #d18874;
+      transform: scale(1.05);
+    }
+
     .product-detail {
       padding: 1.8rem 1.2rem;
       max-width: 700px;
       margin: auto;
       text-align: center;
-      background: #fffdfb;
+      background: #f9fefc;
     }
     .product-detail img {
       width: 80%;
@@ -21,12 +39,12 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
     .product-detail h1 {
-      color: #276ba1;
+      color: #b65f4a;
       font-size: 1.6rem;
       margin-bottom: 0.3rem;
     }
     .product-detail p.subtitle {
-      color: #508fc0;
+      color: #e49c87;
       font-size: 1rem;
       margin-bottom: 1.5rem;
     }
@@ -52,57 +70,132 @@
       margin: 0.6rem 0;
       font-size: 0.95rem;
     }
+    .qty-select {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+    .qty-select label {
+      color: #b65f4a;
+      font-weight: 600;
+    }
+    .qty-select input {
+      width: 70px;
+      text-align: center;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      padding: 6px;
+    }
     .buy-section {
       margin-top: 2.5rem;
       padding-top: 1.5rem;
       border-top: 1px solid #eee;
+    }
+    .price-line {
+      margin-top: 1rem;
+      font-weight: 700;
+      color: #b65f4a;
+      font-size: 1.05rem;
+    }
+    .buy-btn {
+      background: linear-gradient(135deg, #e49c87, #d18874);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: 0.25s;
+    }
+    .buy-btn:hover {
+      background: linear-gradient(135deg, #d18874, #b65f4a);
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
 
   <header class="sub-header">
-    <h1>라이프 에센스™</h1>
-    <p>Renewed Vitality for a More Energized Life</p>
+    <button class="back-main" onclick="location.href='nutrition.html'">⬅ 뉴트리션으로</button>
+    <h1>라이프 에센스</h1>
+    <p>Recharge Your Inner Vitality</p>
   </header>
 
   <main class="product-detail">
-    <img src="assets/img/nutrition/life_essence.jpg" alt="라이프 에센스 제품 이미지">
-    <p>손쉽게 활력을 채우는 새로운 시작,<br> 라이프 에센스™는 빠르게 흡수되는 액상형 뉴트리션으로<br> 하루를 생기 있게 열어줍니다.</p>
+    <img src="assets/img/nutrition/life_essence.jpg" alt="라이프 에센스">
+    <p>활력과 생명 에너지를 위한 힐리의 대표 뉴트리션,<br>
+    식물성 포뮬러와 미네랄 밸런스로 신체의 자연 에너지를 조화롭게 지원합니다.</p>
 
     <div class="section">
-      <h2>✨ Key Benefits</h2>
+      <h2>✨ 주요 특징</h2>
       <ul class="benefit-list">
-        <li><strong>빠른 흡수</strong> — 액상 스틱 포로 빠르게 에너지 보충</li>
-        <li><strong>균형 잡힌 비타민 포뮬러</strong> — 비타민 B군·C·미네랄 복합체 함유</li>
-        <li><strong>간편한 휴대</strong> — 어디서든 하루 1포로 활력 루틴 완성</li>
+        <li><strong>에너지 순환 강화</strong> — 세포의 활력 회복과 신진대사 촉진</li>
+        <li><strong>면역 밸런스 유지</strong> — 천연 미네랄 복합체로 건강한 방어력 지원</li>
+        <li><strong>스트레스 완화</strong> — 피로와 긴장을 완화하는 천연 아미노산 포함</li>
+        <li><strong>IMF 주파수 시너지</strong> — Healy 기기와 함께 사용 시 효과 극대화</li>
       </ul>
     </div>
 
     <div class="section">
-      <h2>🌿 주요 성분</h2>
-      <p>비타민B1, B2, B6, B12, C, 나이아신, 판토텐산, 엽산, 아연, 마그네슘, 구연산, 아미노산 복합체</p>
+      <h2>💧 섭취 방법</h2>
+      <p>하루 1회, 식사 후 물과 함께 1포(또는 1정)를 섭취하세요.<br>지속적인 섭취로 활력과 에너지를 유지하세요.</p>
     </div>
 
     <div class="section">
-      <h2>🥤 섭취 방법</h2>
-      <p>하루 1회, 1포(5g)를 150ml의 물에 녹여 섭취하세요.<br>냉온수 모두 가능합니다.</p>
+      <h2>👩‍⚕️ 권장 대상</h2>
+      <p>• 활력이 떨어진 직장인 및 수험생<br>
+         • 스트레스 및 피로 회복이 필요한 분<br>
+         • 신체의 에너지 밸런스를 유지하고 싶은 분</p>
     </div>
 
     <div class="section">
-      <h2>📱 힐리 연동 프로그램</h2>
-      <p>Healy 기기와 HealAdvisor App을 함께 사용하면<br> 라이프 에센스의 에너지 조화 효과를 극대화할 수 있습니다.</p>
+      <h2>⚠️ 주의사항</h2>
+      <p>• 특정 성분에 알레르기가 있는 경우 성분을 확인하세요.<br>
+         • 이상 증상이 나타나면 섭취를 중단하고 전문가와 상담하세요.<br>
+         • 직사광선을 피해 서늘한 곳에 보관하세요.</p>
+    </div>
+
+    <div class="price-line">💰 가격: ₩49,000</div>
+
+    <div class="qty-select">
+      <label for="qty">수량:</label>
+      <input type="number" id="qty" min="1" value="1">
     </div>
 
     <div class="buy-section">
-      <a href="https://naver.me/폼주소?entry.1=라이프+에센스" class="buy-btn">구매하기</a>
+      <button class="buy-btn" onclick="addToCart()">🛒 주문서에 담기</button>
     </div>
   </main>
 
   <footer>
-    <p>© 2025 힐리 스킨 & 뉴트리션 | 김영숙 · 포항<br>
+    <p>© 2025 힐리 스킨케어 & 뉴트리션 | 김영숙 · 포항<br>
     Powered by Healy World Korea</p>
   </footer>
+
+  <script>
+    function addToCart() {
+      const qty = parseInt(document.getElementById('qty').value);
+      const price = 49000;
+      const name = "라이프 에센스";
+
+      let cart = JSON.parse(localStorage.getItem('healySelections') || '[]');
+      const existing = cart.find(item => item.name === name);
+
+      if (existing) {
+        existing.qty += qty;
+        existing.total = existing.qty * existing.price;
+      } else {
+        cart.push({ name, qty, price, total: qty * price });
+      }
+
+      localStorage.setItem('healySelections', JSON.stringify(cart));
+      alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
+    }
+  </script>
 
 </body>
 </html>
