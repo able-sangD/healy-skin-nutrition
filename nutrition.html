@@ -5,20 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>힐리 뉴트리션</title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* 상단 버튼 */
+    .back-main {
+      display: block;
+      width: fit-content;
+      margin: 1rem auto 0;
+      background: none;
+      border: none;
+      color: #b65f4a;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.25s;
+    }
+    .back-main:hover {
+      color: #d18874;
+      transform: scale(1.05);
+    }
+
+    /* 가격 표시 */
+    .price-tag {
+      font-weight: 700;
+      color: #d18874;
+      margin-top: 0.4rem;
+      font-size: 1.05rem;
+    }
+
+    .sub-header {
+      padding-top: 0.5rem;
+    }
+  </style>
 </head>
 <body>
 
+  <!-- HEADER -->
   <header class="sub-header">
+    <button class="back-main" onclick="location.href='index.html'">⬅ 메인으로</button>
     <h1>힐리 뉴트리션</h1>
     <p>내면의 밸런스를 채우는 주파수 뉴트리션</p>
   </header>
 
+  <!-- MAIN CONTENT -->
   <main class="main-menu">
     <!-- 라이프 에센스 -->
     <a href="life_essence.html" class="menu-card">
       <img src="assets/img/nutrition/life_essence.jpg" alt="라이프 에센스">
       <h2>라이프 에센스</h2>
       <p>활력과 생명 에너지를 위한 핵심 뉴트리션</p>
+      <div class="price-tag">₩49,000</div>
     </a>
 
     <!-- 옴니 밸런스 360° -->
@@ -26,12 +61,14 @@
       <img src="assets/img/nutrition/omni_balance.jpg" alt="옴니 밸런스 360°">
       <h2>옴니 밸런스 360°</h2>
       <p>몸과 마음의 조화를 위한 프리미엄 포뮬러</p>
+      <div class="price-tag">₩99,000</div>
     </a>
   </main>
 
+  <!-- FOOTER -->
   <footer>
-    <p>© 2025 힐리 스킨 & 뉴트리션 | 김영숙 · 포항<br>
-    Powered by Healy World Korea</p>
+    <p>© 2025 힐리 스킨케어 & 뉴트리션 | 김영숙 · 포항<br>
+    Inspired by Healy World Korea</p>
   </footer>
 
 </body>
