@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>힐리 페이셜 케어</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* 상단 버튼 */
+    .back-main {
+      display: block;
+      width: fit-content;
+      margin: 1rem auto 0;
+      background: none;
+      border: none;
+      color: #b65f4a;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.25s;
+    }
+    .back-main:hover {
+      color: #d18874;
+      transform: scale(1.05);
+    }
+
+    /* 가격 표시 */
+    .price-tag {
+      font-weight: 700;
+      color: #d18874;
+      margin-top: 0.4rem;
+      font-size: 1.05rem;
+    }
+
+    .sub-header {
+      padding-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="sub-header">
+    <button class="back-main" onclick="location.href='skincare.html'">⬅ 스킨케어로</button>
+    <h1>힐리 페이셜 케어</h1>
+    <p>맑고 건강한 피부 밸런스를 위한 프리미엄 머드 마스크 라인</p>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-menu">
+
+    <!-- 클래리파잉 머드 마스크 -->
+    <a href="facial_clarifying.html" class="menu-card">
+      <img src="assets/img/skincare/facial/clarifying.png" alt="클래리파잉 머드 마스크">
+      <h2>클래리파잉 머드 마스크</h2>
+      <p>피부 노폐물과 피지를 정화해<br>맑고 매끈한 피부결로 케어</p>
+      <div class="price-tag">₩79,000</div>
+    </a>
+
+    <!-- 스크러빙 마스크 -->
+    <a href="facial_scrubbing.html" class="menu-card">
+      <img src="assets/img/skincare/facial/scrubbing.png" alt="스크러빙 마스크">
+      <h2>스크러빙 마스크</h2>
+      <p>천연 입자가 각질을 부드럽게 제거해<br>피부를 산뜻하게 유지</p>
+      <div class="price-tag">₩99,000</div>
+    </a>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 힐리 스킨케어 & 뉴트리션 | 김영숙 · 포항<br>
+    Inspired by Healy World Korea</p>
+  </footer>
+
+</body>
+</html>
