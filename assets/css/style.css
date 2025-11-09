@@ -1,0 +1,130 @@
+/* ===============================
+   Healy Skin & Nutrition 스타일
+   모바일 / 태블릿 반응형 디자인
+=================================*/
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Playfair+Display:wght@600&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #fff9f7; /* 따뜻한 크림톤 */
+  color: #333;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* -------------------------------
+   HEADER
+--------------------------------*/
+header {
+  background-color: #ffffff;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.main-header h1,
+.sub-header h1 {
+  font-family: 'Playfair Display', serif;
+  color: #b65f4a;
+  font-size: 1.6rem;
+  margin: 0.3rem 0;
+  letter-spacing: -0.5px;
+}
+
+.main-header p,
+.sub-header p {
+  color: #e49c87;
+  font-weight: 500;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* -------------------------------
+   메인 메뉴 / 제품 카드 공통 스타일
+--------------------------------*/
+.main-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.8rem;
+  padding: 2rem 1rem;
+}
+
+.menu-card {
+  width: 90%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.menu-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+.menu-card img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+}
+.menu-card h2 {
+  margin: 1rem 0 0.5rem;
+  font-size: 1.4rem;
+  color: #b65f4a;
+}
+.menu-card p {
+  margin-bottom: 1.2rem;
+  font-size: 0.95rem;
+  color: #666;
+}
+.buy-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #e49c87, #d18874);
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.buy-btn:hover {
+  background: linear-gradient(135deg, #d18874, #b65f4a);
+  transform: scale(1.05);
+}
+
+/* -------------------------------
+   FOOTER
+--------------------------------*/
+footer {
+  background-color: #fff;
+  padding: 1.2rem;
+  font-size: 0.9rem;
+  color: #999;
+  line-height: 1.6;
+  border-top: 1px solid #eee;
+  margin-top: 2rem;
+}
+footer strong {
+  color: #b65f4a;
+}
+
+/* -------------------------------
+   반응형 (스마트폰 / 태블릿)
+--------------------------------*/
+@media (min-width: 1000px) {
+  .main-menu {
+    flex-direction: row;
+    justify-content: center;
+  }
+  .menu-card {
+    max-width: 380px;
+  }
+}
