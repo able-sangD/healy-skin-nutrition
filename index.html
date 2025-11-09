@@ -5,6 +5,114 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Healy Skin & Nutrition</title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <style>
+    .main-header { margin-bottom: 1rem; }
+
+    /* 이름 입력 */
+    .name-box {
+      width: 90%;
+      max-width: 480px;
+      margin: 1.5rem auto 0;
+      background: #fffefc;
+      border-radius: 14px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      padding: 1rem;
+      text-align: center;
+    }
+    .name-box label {
+      color: #b65f4a;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .name-box input {
+      width: 60%;
+      max-width: 240px;
+      padding: 9px 10px;
+      margin-left: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      text-align: center;
+      font-size: 0.95rem;
+      transition: 0.2s;
+    }
+    .name-box input:focus {
+      outline: none;
+      border-color: #d18874;
+      box-shadow: 0 0 4px rgba(209,136,116,0.3);
+    }
+
+    /* 주문서 */
+    .summary-box {
+      display: none;
+      width: 90%;
+      max-width: 480px;
+      margin: 2rem auto;
+      background: #fffefc;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .summary-box h2 {
+      color: #b65f4a;
+      margin-bottom: 0.3rem;
+    }
+    .buyer-line {
+      color: #555;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+    .date-line {
+      color: #777;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .summary-box table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      color: #555;
+    }
+    .summary-box th, .summary-box td {
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+    }
+    .summary-box th {
+      background: #fff5f3;
+      color: #b65f4a;
+      font-weight: 600;
+    }
+    .summary-total {
+      font-weight: 700;
+      color: #b65f4a;
+      font-size: 1.1rem;
+      margin-top: 0.5rem;
+    }
+    .summary-btns {
+      margin-top: 1.2rem;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .summary-btns button {
+      background: linear-gradient(135deg, #e49c87, #d18874);
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.25s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .summary-btns button:hover {
+      background: linear-gradient(135deg, #d18874, #b65f4a);
+      transform: scale(1.05);
+    }
+  </style>
 </head>
 <body>
 
@@ -13,6 +121,7 @@
     <p>자연과 주파수가 만나는 뷰티 & 웰빙 케어</p>
   </header>
 
+  <!-- 카테고리 선택 -->
   <main class="main-menu">
     <a href="nutrition.html" class="menu-card">
       <img src="assets/img/nutrition_main.png" alt="힐리 뉴트리션">
@@ -27,10 +136,117 @@
     </a>
   </main>
 
+  <!-- 이름 입력 -->
+  <div class="name-box">
+    <label for="buyerName">이름:</label>
+    <input type="text" id="buyerName" placeholder="이름을 입력하세요">
+  </div>
+
+  <!-- 주문서 -->
+  <section id="summary" class="summary-box">
+    <h2>🧾 주문서</h2>
+    <div class="buyer-line" id="buyerInfo">주문자: -</div>
+    <div class="date-line" id="todayDate">주문일: -</div>
+
+    <table id="summaryTable">
+      <thead>
+        <tr>
+          <th>제품명</th>
+          <th>수량</th>
+          <th>가격</th>
+          <th>합계</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="summary-total" id="summaryTotal"></div>
+
+    <div class="summary-btns">
+      <button onclick="clearSelections()">선택 초기화</button>
+      <button onclick="saveSummary()">이미지로 저장</button>
+    </div>
+  </section>
+
   <footer>
-    <p>© 2025 힐리 스킨 & 뉴트리션 | 김영숙 · 포항<br>
+    <p>© 2025 힐리 스킨케어 & 뉴트리션 | 김영숙 · 포항<br>
     Inspired by Healy World Korea</p>
   </footer>
 
+  <script>
+    // 오늘 날짜 자동 표시
+    function getToday() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    // 데이터 로드
+    function loadSelections() {
+      const data = JSON.parse(localStorage.getItem('healySelections') || '[]');
+      const buyerName = localStorage.getItem('buyerName') || '';
+      const tableBody = document.querySelector('#summaryTable tbody');
+      const totalDisplay = document.getElementById('summaryTotal');
+      const nameDisplay = document.getElementById('buyerInfo');
+      const dateDisplay = document.getElementById('todayDate');
+
+      tableBody.innerHTML = '';
+      let total = 0;
+
+      // 이름, 날짜 표시
+      nameDisplay.textContent = buyerName ? `주문자: ${buyerName}` : '주문자: -';
+      dateDisplay.textContent = `작성일: ${getToday()}`;
+
+      if (data.length === 0) {
+        document.getElementById('summary').style.display = 'none';
+        return;
+      }
+
+      data.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${item.name}</td>
+          <td>${item.qty}</td>
+          <td>₩${item.price.toLocaleString()}</td>
+          <td>₩${item.total.toLocaleString()}</td>
+        `;
+        tableBody.appendChild(tr);
+        total += item.total;
+      });
+
+      totalDisplay.textContent = `총 합계: ₩${total.toLocaleString()}`;
+      document.getElementById('summary').style.display = 'block';
+    }
+
+    // 이름 입력 시 저장 및 주문서 반영
+    document.getElementById('buyerName').addEventListener('input', (e) => {
+      const name = e.target.value.trim();
+      localStorage.setItem('buyerName', name);
+      document.getElementById('buyerInfo').textContent = `주문자: ${name || '-'}`;
+    });
+
+    // 초기화
+    function clearSelections() {
+      localStorage.removeItem('healySelections');
+      alert("선택이 초기화되었습니다.");
+      loadSelections();
+    }
+
+    // 이미지 저장 (정상 작동)
+    function saveSummary() {
+      const target = document.getElementById('summary'); // 주문서만 캡처
+      const buyerName = localStorage.getItem('buyerName') || 'healy_order';
+      html2canvas(target, { scale: 2, useCORS: true }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `${buyerName}_주문서.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+
+    window.onload = loadSelections;
+  </script>
 </body>
 </html>
