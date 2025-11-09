@@ -6,7 +6,6 @@
   <title>바디 케어 | 힐리 스킨케어</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
-    /* 상단 버튼 */
     .back-main {
       display: block;
       width: fit-content;
@@ -23,8 +22,6 @@
       color: #d18874;
       transform: scale(1.05);
     }
-
-    /* 가격 표시 */
     .price-tag {
       font-weight: 700;
       color: #d18874;
@@ -32,7 +29,6 @@
       font-size: 1.05rem;
     }
 
-    /* 슬라이드 구조 */
     .scroll-wrapper {
       overflow-x: auto;
       scroll-behavior: smooth;
@@ -40,6 +36,7 @@
       padding: 1rem 0;
       margin: 1.5rem 0;
       cursor: grab;
+      user-select: none;
     }
     .scroll-wrapper:active {
       cursor: grabbing;
@@ -60,114 +57,106 @@
     }
 
     @media (min-width: 700px) {
-      .menu-card {
-        flex: 0 0 45%;
-      }
+      .menu-card { flex: 0 0 45%; }
     }
-
     @media (min-width: 1000px) {
-      .menu-card {
-        flex: 0 0 30%;
-      }
+      .menu-card { flex: 0 0 30%; }
     }
-
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
   <header class="sub-header">
     <button class="back-main" onclick="location.href='skincare.html'">⬅ 스킨케어로</button>
     <h1>바디 케어</h1>
     <p>사해 미네랄로 완성하는 천연 바디 밸런스</p>
   </header>
 
-  <!-- MAIN CONTENT -->
   <main class="scroll-wrapper">
     <div class="scroll-track">
 
       <a href="body_soap.html" class="menu-card">
-        <img src="assets/img/skincare/body/soap.jpg" alt="미네랄 솝">
+        <img src="assets/img/skincare/body/soap.png" alt="미네랄 솝">
         <h2>미네랄 솝</h2>
         <p>사해 미네랄로 피부를 깨끗하고 촉촉하게</p>
-        <div class="price-tag">₩19,000</div>
+        <div class="price-tag">₩15,300</div>
       </a>
 
       <a href="body_salt.html" class="menu-card">
-        <img src="assets/img/skincare/body/salt.jpg" alt="데드 씨 배스 솔트">
+        <img src="assets/img/skincare/body/salt.png" alt="데드 씨 배스 솔트">
         <h2>데드 씨 배스 솔트</h2>
         <p>사해 소금의 깊은 미네랄로 피로를 완화</p>
-        <div class="price-tag">₩28,000</div>
+        <div class="price-tag">₩32,000</div>
       </a>
 
       <a href="body_mud.html" class="menu-card">
-        <img src="assets/img/skincare/body/mud.jpg" alt="미네랄 리치 바디 머드">
+        <img src="assets/img/skincare/body/mud.png" alt="미네랄 리치 바디 머드">
         <h2>미네랄 리치 바디 머드</h2>
         <p>피부 정화와 탄력 강화를 돕는 천연 머드팩</p>
-        <div class="price-tag">₩45,000</div>
+        <div class="price-tag">₩26,000</div>
       </a>
 
       <a href="body_scrub_p.html" class="menu-card">
-        <img src="assets/img/skincare/body/scrub_p.jpg" alt="솔트 스크럽 파머그래넛">
+        <img src="assets/img/skincare/body/scrub_p.png" alt="솔트 스크럽 파머그래넛">
         <h2>솔트 스크럽 파머그래넛</h2>
         <p>석류 추출물로 각질 제거와 탄력 케어</p>
-        <div class="price-tag">₩33,000</div>
+        <div class="price-tag">₩42,500</div>
       </a>
 
       <a href="body_salt_oil.html" class="menu-card">
-        <img src="assets/img/skincare/body/salt_oil.jpg" alt="솔트 앤 오일 스크럽 파머그래넛">
+        <img src="assets/img/skincare/body/salt_oil.png" alt="솔트 앤 오일 스크럽 파머그래넛">
         <h2>솔트 앤 오일 스크럽 파머그래넛</h2>
         <p>미네랄 소금과 오일의 깊은 보습 시너지</p>
-        <div class="price-tag">₩35,000</div>
+        <div class="price-tag">₩34,500</div>
       </a>
 
       <a href="body_wash.html" class="menu-card">
-        <img src="assets/img/skincare/body/wash.jpg" alt="컨디셔닝 바디 워시">
+        <img src="assets/img/skincare/body/wash.png" alt="컨디셔닝 바디 워시">
         <h2>컨디셔닝 바디 워시</h2>
         <p>풍부한 거품으로 촉촉한 클렌징</p>
-        <div class="price-tag">₩27,000</div>
-      </a>
-
-      <a href="body_butter.html" class="menu-card">
-        <img src="assets/img/skincare/body/butter.jpg" alt="너리싱 바디 버터 파머그래넛">
-        <h2>너리싱 바디 버터 파머그래넛</h2>
-        <p>보습력과 향기로 채워주는 고보습 바디 버터</p>
-        <div class="price-tag">₩42,000</div>
-      </a>
-
-      <a href="body_lotion.html" class="menu-card">
-        <img src="assets/img/skincare/body/lotion.jpg" alt="소프트닝 바디 로션 파머그래넛">
-        <h2>소프트닝 바디 로션 파머그래넛</h2>
-        <p>부드럽게 스며드는 데일리 보습 로션</p>
-        <div class="price-tag">₩36,000</div>
-      </a>
-
-      <a href="body_hydra.html" class="menu-card">
-        <img src="assets/img/skincare/body/hydra.jpg" alt="하이드레이팅 크림">
-        <h2>하이드레이팅 크림</h2>
-        <p>건조한 피부에 깊은 수분을 공급하는 데일리 크림</p>
         <div class="price-tag">₩31,000</div>
       </a>
 
+      <a href="body_butter.html" class="menu-card">
+        <img src="assets/img/skincare/body/butter.png" alt="너리싱 바디 버터 파머그래넛">
+        <h2>너리싱 바디 버터 파머그래넛</h2>
+        <p>보습력과 향기로 채워주는 고보습 바디 버터</p>
+        <div class="price-tag">₩34,800</div>
+      </a>
+
+      <a href="body_lotion.html" class="menu-card">
+        <img src="assets/img/skincare/body/lotion.png" alt="소프트닝 바디 로션 파머그래넛">
+        <h2>소프트닝 바디 로션 파머그래넛</h2>
+        <p>부드럽게 스며드는 데일리 보습 로션</p>
+        <div class="price-tag">₩20,500</div>
+      </a>
+
+      <a href="body_hydra.html" class="menu-card">
+        <img src="assets/img/skincare/body/hydra.png" alt="하이드레이팅 핸드 크림">
+        <h2>하이드레이팅 핸드 크림</h2>
+        <p>손 피부에 깊은 보습과 영양을 공급</p>
+        <div class="price-tag">₩24,000</div>
+      </a>
+
       <a href="body_foot.html" class="menu-card">
-        <img src="assets/img/skincare/body/foot.jpg" alt="수딩 풋 크림">
+        <img src="assets/img/skincare/body/foot.png" alt="수딩 풋 크림">
         <h2>수딩 풋 크림</h2>
         <p>지친 발에 쿨링과 보습을 동시에</p>
-        <div class="price-tag">₩25,000</div>
+        <div class="price-tag">₩24,000</div>
       </a>
 
       <a href="body_shampoo.html" class="menu-card">
-        <img src="assets/img/skincare/body/shampoo.jpg" alt="하이드라머드 에너자이즈 샴푸">
-        <h2>하이드라머드 에너자이즈 샴푸</h2>
+        <img src="assets/img/skincare/body/shampoo.png" alt="하이드라머드 에너자이즈 머드 샴푸">
+        <h2>하이드라머드 에너자이즈 머드 샴푸</h2>
         <p>두피를 깨끗하게 세정하고 활력을 부여</p>
-        <div class="price-tag">₩38,000</div>
+        <div class="price-tag">₩33,600</div>
       </a>
 
       <a href="body_conditioner.html" class="menu-card">
-        <img src="assets/img/skincare/body/conditioner.jpg" alt="바이탈라이즈 머드 컨디셔너">
+        <img src="assets/img/skincare/body/conditioner.png" alt="바이탈라이즈 머드 컨디셔너">
         <h2>바이탈라이즈 머드 컨디셔너</h2>
         <p>모발에 윤기와 영양을 더해주는 미네랄 컨디셔너</p>
-        <div class="price-tag">₩39,000</div>
+        <div class="price-tag">₩33,600</div>
       </a>
 
     </div>
@@ -179,7 +168,6 @@
   </footer>
 
   <script>
-    // 마우스 드래그로 스크롤
     const slider = document.querySelector('.scroll-wrapper');
     let isDown = false;
     let startX;
@@ -187,13 +175,24 @@
 
     slider.addEventListener('mousedown', e => {
       isDown = true;
+      slider.classList.add('active');
       startX = e.pageX - slider.offsetLeft;
       scrollLeft = slider.scrollLeft;
+      e.preventDefault();
     });
-    slider.addEventListener('mouseleave', () => { isDown = false; });
-    slider.addEventListener('mouseup', () => { isDown = false; });
+
+    slider.addEventListener('mouseleave', () => {
+      isDown = false;
+      slider.classList.remove('active');
+    });
+
+    slider.addEventListener('mouseup', () => {
+      isDown = false;
+      slider.classList.remove('active');
+    });
+
     slider.addEventListener('mousemove', e => {
-      if(!isDown) return;
+      if (!isDown) return;
       e.preventDefault();
       const x = e.pageX - slider.offsetLeft;
       const walk = (x - startX) * 1.5;
