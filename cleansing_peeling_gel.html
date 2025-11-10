@@ -3,123 +3,212 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>힐리 클렌징 | 힐리 스킨케어</title>
+  <title>익스폴리에이터 필링 젤 | 힐리 스킨케어</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
-    /* 상단 버튼 */
     .back-main {
       display: block;
       width: fit-content;
       margin: 1rem auto 0;
       background: none;
       border: none;
-      color: #a46b4c;
+      color: #3c3c3c;
       font-weight: 700;
       cursor: pointer;
       font-size: 1rem;
       transition: 0.25s;
     }
     .back-main:hover {
-      color: #c17e59;
+      color: #5d5d5d;
       transform: scale(1.05);
     }
 
-    /* 가격 표시 */
-    .price-tag {
-      font-weight: 700;
-      color: #c17e59;
-      margin-top: 0.4rem;
-      font-size: 1.05rem;
-    }
-
-    /* 상단 헤더 */
-    .sub-header {
-      padding-top: 0.5rem;
-    }
-
-    /* 메인 메뉴 카드 */
-    .main-menu {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.5rem;
-      padding: 2rem 1rem;
-      background: #f7f5f2;
-    }
-    .menu-card {
-      width: 280px;
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    .product-detail {
+      max-width: 720px;
+      margin: auto;
+      padding: 1.5rem;
+      background: #faf9f8;
       text-align: center;
-      padding: 1.2rem;
-      text-decoration: none;
-      color: inherit;
+    }
+
+    .product-detail img {
+      width: 80%;
+      max-width: 380px;
+      border-radius: 14px;
+      margin: 1.2rem 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      color: #2e2e2e;
+      font-size: 1.6rem;
+      margin-bottom: 0.4rem;
+    }
+
+    p.subtitle {
+      color: #7a7a7a;
+      font-size: 1rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .section {
+      margin-top: 2rem;
+      text-align: left;
+    }
+    .section h2 {
+      color: #3c3c3c;
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+    }
+    .section p, .section li {
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    ul.benefit-list {
+      list-style: none;
+      padding: 0;
+    }
+    ul.benefit-list li {
+      margin: 0.6rem 0;
+    }
+
+    .qty-select {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+    .qty-select label {
+      color: #3c3c3c;
+      font-weight: 600;
+    }
+    .qty-select input {
+      width: 70px;
+      text-align: center;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      padding: 6px;
+    }
+
+    .price-line {
+      text-align: center;
+      font-weight: 700;
+      color: #3c3c3c;
+      font-size: 1.05rem;
+      margin-top: 1.8rem;
+    }
+
+    .buy-section {
+      text-align: center;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #eee;
+    }
+
+    .buy-btn {
+      background: linear-gradient(135deg, #555, #2e2e2e);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
       transition: 0.25s;
     }
-    .menu-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+
+    .buy-btn:hover {
+      background: linear-gradient(135deg, #2e2e2e, #000);
+      transform: scale(1.05);
     }
-    .menu-card img {
-      width: 100%;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-    }
-    .menu-card h2 {
-      color: #a46b4c;
-      font-size: 1.2rem;
-      margin-bottom: 0.3rem;
-    }
-    .menu-card p {
-      color: #666;
-      font-size: 0.9rem;
-      margin-bottom: 0.6rem;
-      line-height: 1.4;
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.85rem;
+      color: #888;
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
   <header class="sub-header">
-    <button class="back-main" onclick="location.href='skincare.html'">⬅ 스킨케어로</button>
-    <h1>힐리 클렌징</h1>
-    <p>순하고 깨끗한 사해 미네랄 클렌징 라인</p>
+    <button class="back-main" onclick="location.href='cleansing.html'">⬅ 클렌징으로</button>
+    <h1>익스폴리에이터 필링 젤</h1>
+    <p class="subtitle">묵은 각질을 부드럽게 제거하고 매끈한 피부결 완성</p>
   </header>
 
-  <!-- MAIN CONTENT -->
-  <main class="main-menu">
-    <!-- 페이스 워시 머드 솝 -->
-    <a href="cleansing_mud_soap.html" class="menu-card">
-      <img src="assets/img/skincare/cleansing/mud_soap.png" alt="페이스 워시 머드 솝">
-      <h2>페이스 워시 머드 솝</h2>
-      <p>사해 머드의 깊은 정화력으로 깨끗한 피부결 완성</p>
-      <div class="price-tag">₩18,500</div>
-    </a>
+  <main class="product-detail">
+    <img src="assets/img/skincare/cleansing/peeling_gel.png" alt="익스폴리에이터 필링 젤">
 
-    <!-- 페이스 워시 리바이빙 클렌징 젤 -->
-    <a href="cleansing_reviv_gel.html" class="menu-card">
-      <img src="assets/img/skincare/cleansing/reviv_gel.png" alt="페이스 워시 리바이빙 클렌징 젤">
-      <h2>페이스 워시 리바이빙 클렌징 젤</h2>
-      <p>세안 후에도 촉촉하게, 순한 젤 타입 클렌저</p>
-      <div class="price-tag">₩28,000</div>
-    </a>
+    <div class="section">
+      <h2>✨ 주요 특징</h2>
+      <ul class="benefit-list">
+        <li><strong>부드러운 필링</strong> — 각질을 자극 없이 제거하여 피부결 정돈</li>
+        <li><strong>촉촉한 마무리</strong> — 세안 후에도 당김 없는 촉촉한 피부 유지</li>
+        <li><strong>피부 광채 케어</strong> — 피부 톤을 환하게 밝혀주는 워시 오프 젤</li>
+      </ul>
+    </div>
 
-    <!-- 익스폴리에이터 필링 젤 -->
-    <a href="cleansing_peeling_gel.html" class="menu-card">
-      <img src="assets/img/skincare/cleansing/peeling_gel.png" alt="익스폴리에이터 필링 젤">
-      <h2>익스폴리에이터 필링 젤</h2>
-      <p>묵은 각질을 부드럽게 제거하고 매끈한 피부로</p>
-      <div class="price-tag">₩49,000</div>
-    </a>
+    <div class="section">
+      <h2>🌿 주요 성분</h2>
+      <ul class="benefit-list">
+        <li><strong>파파야 열매 추출물</strong> — 효소 작용으로 묵은 각질을 자연스럽게 제거</li>
+        <li><strong>오이 열매 추출물</strong> — 피부 진정 및 수분 공급</li>
+        <li><strong>시트릭애씨드</strong> — 피부 결을 매끄럽게 정돈</li>
+        <li><strong>인삼 추출물</strong> — 피부 활력과 생기 부여</li>
+        <li><strong>캐모마일꽃 추출물</strong> — 자극 완화와 진정 효과</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🧴 사용 방법</h2>
+      <p>세안 후 물기를 가볍게 제거한 뒤 얼굴에 적당량을 바르고<br>
+      부드럽게 롤링하여 각질이 나오면 미온수로 깨끗이 헹궈주세요.<br>
+      주 1~2회 사용을 권장합니다.</p>
+    </div>
+
+    <div class="price-line">💰 가격: ₩49,000</div>
+
+    <div class="qty-select">
+      <label for="qty">수량:</label>
+      <input type="number" id="qty" min="1" value="1">
+    </div>
+
+    <div class="buy-section">
+      <button class="buy-btn" onclick="addToCart()">🛒 주문서에 담기</button>
+    </div>
   </main>
 
-  <!-- FOOTER -->
   <footer>
     <p>© 2025 힐리 스킨케어 & 뉴트리션 | 김영숙 · 포항<br>
     Powered by Healy World Korea</p>
   </footer>
+
+  <script>
+    function addToCart() {
+      const qty = parseInt(document.getElementById('qty').value);
+      const price = 49000;
+      const name = "익스폴리에이터 필링 젤";
+
+      let cart = JSON.parse(localStorage.getItem('healySelections') || '[]');
+      const existing = cart.find(item => item.name === name);
+
+      if (existing) {
+        existing.qty += qty;
+        existing.total = existing.qty * existing.price;
+      } else {
+        cart.push({ name, qty, price, total: qty * price });
+      }
+
+      localStorage.setItem('healySelections', JSON.stringify(cart));
+      alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
+    }
+  </script>
 
 </body>
 </html>
