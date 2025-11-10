@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>힐리 바이오 스킨 | 힐리 스킨케어</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .back-main {
+      display: block;
+      width: fit-content;
+      margin: 1rem auto 0;
+      background: none;
+      border: none;
+      color: #3c3c3c;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.25s;
+    }
+    .back-main:hover {
+      color: #5d5d5d;
+      transform: scale(1.05);
+    }
+
+    .sub-header {
+      text-align: center;
+      padding-top: 0.5rem;
+    }
+
+    .price-tag {
+      font-weight: 700;
+      color: #4d85c6;
+      margin-top: 0.4rem;
+      font-size: 1.05rem;
+    }
+
+    .main-menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 2rem 1rem;
+      background: #f7f9fc;
+    }
+
+    .section-title {
+      width: 100%;
+      text-align: center;
+      color: #2e2e2e;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-top: 2rem;
+      border-top: 1px solid #e0e6ee;
+      padding-top: 2rem;
+    }
+
+    .menu-card {
+      width: 280px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      text-align: center;
+      padding: 1.2rem;
+      text-decoration: none;
+      color: inherit;
+      transition: 0.25s;
+    }
+    .menu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+    .menu-card img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+    .menu-card h2 {
+      color: #3c3c3c;
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+    }
+    .menu-card p {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
+      line-height: 1.4;
+    }
+
+    /* ✅ 글로우 라인만 가로 스크롤 */
+    .glow-row {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      width: 100%;
+      padding: 1rem 0 1.5rem;
+      scroll-snap-type: x mandatory;
+    }
+    .glow-row::-webkit-scrollbar {
+      height: 8px;
+    }
+    .glow-row::-webkit-scrollbar-thumb {
+      background: #d1d8e0;
+      border-radius: 10px;
+    }
+    .glow-row::-webkit-scrollbar-track {
+      background: #f1f3f6;
+    }
+    .glow-row .menu-card {
+      flex: 0 0 260px;
+      scroll-snap-align: center;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #888;
+      padding: 2rem 0;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="sub-header">
+    <button class="back-main" onclick="location.href='index.html'">⬅ 메인으로</button>
+    <h1>힐리 바이오 스킨</h1>
+    <p>피부 본연의 리듬을 되살리는 바이오 밸런스 케어</p>
+  </header>
+
+  <main class="main-menu">
+    <!-- ✅ 하이드레이션 라인 -->
+    <div class="section-title">바이오 스킨 하이드레이션</div>
+
+    <a href="bio_toner.html" class="menu-card">
+      <img src="assets/img/skincare/bio/toner.png" alt="리프레싱 토너">
+      <h2>리프레싱 토너</h2>
+      <p>맑고 촉촉한 첫 단계 수분 밸런스 케어</p>
+      <div class="price-tag">₩34,000</div>
+    </a>
+
+    <a href="bio_serum.html" class="menu-card">
+      <img src="assets/img/skincare/bio/nourishing_serum.png" alt="너리싱 세럼">
+      <h2>너리싱 세럼</h2>
+      <p>농축된 보습 에너지로 피부 깊은 영양 충전</p>
+      <div class="price-tag">₩72,500</div>
+    </a>
+
+    <a href="bio_cream.html" class="menu-card">
+      <img src="assets/img/skincare/bio/moisture_cream.png" alt="모이스쳐라이징 크림">
+      <h2>모이스쳐라이징 크림</h2>
+      <p>수분 보호막으로 하루 종일 촉촉한 피부 유지</p>
+      <div class="price-tag">₩59,000</div>
+    </a>
+
+    <!-- ✅ 글로우 라인 -->
+    <div class="section-title">바이오 스킨 글로우</div>
+    <div class="glow-row">
+      <a href="bio_milky_essence.html" class="menu-card">
+        <img src="assets/img/skincare/bio/milky_essence.png" alt="밀키 에센스">
+        <h2>밀키 에센스</h2>
+        <p>촉촉한 윤광을 더해주는 크리미 에센스</p>
+        <div class="price-tag">₩55,000</div>
+      </a>
+
+      <a href="bio_vc_serum.html" class="menu-card">
+        <img src="assets/img/skincare/bio/vc_serum.png" alt="VC 앰플 세럼">
+        <h2>VC 앰플 세럼</h2>
+        <p>비타민C의 맑은 광채로 피부톤 개선</p>
+        <div class="price-tag">₩82,000</div>
+      </a>
+
+      <a href="bio_ha_serum.html" class="menu-card">
+        <img src="assets/img/skincare/bio/ha_serum.png" alt="HA 앰플 세럼">
+        <h2>HA 앰플 세럼</h2>
+        <p>히알루론산 보습 에너지로 탄탄한 수분 광채</p>
+        <div class="price-tag">₩71,000</div>
+      </a>
+
+      <a href="bio_ma_serum.html" class="menu-card">
+        <img src="assets/img/skincare/bio/ma_serum.png" alt="MA 나이트 앰플 세럼">
+        <h2>MA 나이트 앰플 세럼</h2>
+        <p>야간 집중 케어로 피부결 회복</p>
+        <div class="price-tag">₩77,000</div>
+      </a>
+
+      <a href="bio_radiance_cream.html" class="menu-card">
+        <img src="assets/img/skincare/bio/radiance_cream.png" alt="어드밴스드 래디언스 크림">
+        <h2>어드밴스드 래디언스 크림</h2>
+        <p>윤기와 탄력을 동시에 잡는 글로우 피니시 크림</p>
+        <div class="price-tag">₩68,000</div>
+      </a>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 힐리 스킨케어 & 뉴트리션 | 김영숙 · 포항<br>
+    Powered by Healy World Korea</p>
+  </footer>
+
+</body>
+</html>
