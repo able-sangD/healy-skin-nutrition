@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>리프레싱 토너 | 힐리 스킨케어</title>
+  <title>너리싱 세럼 | 힐리 스킨케어</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
     .back-main {
@@ -140,38 +140,42 @@
 
   <header class="sub-header">
     <button class="back-main" onclick="location.href='bio.html'">⬅ 바이오 스킨으로</button>
-    <h1>리프레싱 토너</h1>
-    <p class="subtitle">맑고 투명한 수분 에너지로 피부 결을 정돈하는 첫 단계</p>
+    <h1>너리싱 세럼</h1>
+    <p class="subtitle">풍부한 보습 에너지로 피부 깊은 곳까지 채워주는 영양 세럼</p>
   </header>
 
   <main class="product-detail">
-    <img src="assets/img/skincare/bio/toner.png" alt="리프레싱 토너">
+    <img src="assets/img/skincare/bio/nourishing_serum.png" alt="너리싱 세럼">
 
     <div class="section">
       <h2>✨ 주요 특징</h2>
       <ul class="benefit-list">
-        <li><strong>촉촉하고 맑은 피부</strong> — 새로운 수분 에너지로 피부결을 정리</li>
-        <li><strong>데일리 클렌징 후 진정 케어</strong> — 피부 밸런스를 안정시켜 편안한 촉감</li>
-        <li><strong>빠른 흡수감 & 산뜻함</strong> — 끈적임 없이 피부 깊숙이 수분 전달</li>
+        <li><strong>피부결 개선 & 탄력 강화</strong> — 매끄럽고 건강한 피부결로 정돈</li>
+        <li><strong>보습 강화</strong> — 풍부한 수분 에너지로 촉촉함 유지</li>
+        <li><strong>흡수력 우수</strong> — 끈적임 없이 빠르게 스며드는 텍스처</li>
       </ul>
     </div>
 
     <div class="section">
       <h2>🌿 주요 성분</h2>
       <ul class="benefit-list">
-        <li><strong>포도씨 오일</strong> — 피부에 영양과 진정을 동시에</li>
-        <li><strong>알로에베라</strong> — 자극받은 피부에 수분 진정 효과</li>
-        <li><strong>호호바 오일</strong> — 피부 밸런스를 유지하며 부드러운 윤기 부여</li>
+        <li><strong>알로에베라</strong> — 피부 진정과 수분 공급</li>
+        <li><strong>호호바 오일</strong> — 피부 밸런스를 유지하고 윤기 부여</li>
+        <li><strong>나이아신아마이드</strong> — 피부 장벽 강화 및 투명도 개선</li>
+        <li><strong>블루베리 오일</strong> — 항산화 작용으로 건강한 윤기 유지</li>
+        <li><strong>석류 오일</strong> — 생기 있는 피부톤 회복</li>
       </ul>
     </div>
 
     <div class="section">
       <h2>🧴 사용 방법</h2>
-      <p>아침, 저녁 세안 후 화장솜에 적당량을 덜어 피부 결 방향으로 부드럽게 닦아줍니다.<br>
-      모든 피부 타입에 사용 가능합니다.</p>
+      <p>
+        1️⃣ 세안 후 토너로 피부결을 정돈한 다음, 적당량을 얼굴과 목에 부드럽게 펴 바릅니다.<br>
+        2️⃣ 이후 크림 단계로 마무리합니다.
+      </p>
     </div>
 
-    <div class="price-line">💰 가격: ₩34,000</div>
+    <div class="price-line">💰 가격: ₩72,500</div>
 
     <div class="qty-select">
       <label for="qty">수량:</label>
@@ -191,8 +195,8 @@
   <script>
     function addToCart() {
       const qty = parseInt(document.getElementById('qty').value);
-      const price = 34000;
-      const name = "리프레싱 토너";
+      const price = 72500;
+      const name = "너리싱 세럼";
 
       let cart = JSON.parse(localStorage.getItem('healySelections') || '[]');
       const existing = cart.find(item => item.name === name);
