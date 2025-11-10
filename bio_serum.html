@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>리프레싱 토너 | 힐리 스킨케어</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .back-main {
+      display: block;
+      width: fit-content;
+      margin: 1rem auto 0;
+      background: none;
+      border: none;
+      color: #4d85c6;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.25s;
+    }
+    .back-main:hover {
+      color: #6ca4d8;
+      transform: scale(1.05);
+    }
+
+    .product-detail {
+      max-width: 720px;
+      margin: auto;
+      padding: 1.5rem;
+      background: #f2f8fc;
+      text-align: center;
+    }
+
+    .product-detail img {
+      width: 80%;
+      max-width: 380px;
+      border-radius: 14px;
+      margin: 1.2rem 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      color: #2f4e6b;
+      font-size: 1.6rem;
+      margin-bottom: 0.4rem;
+    }
+
+    p.subtitle {
+      color: #4d85c6;
+      font-size: 1rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .section {
+      margin-top: 2rem;
+      text-align: left;
+    }
+    .section h2 {
+      color: #3b6d9c;
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+    }
+    .section p, .section li {
+      color: #444;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    ul.benefit-list {
+      list-style: none;
+      padding: 0;
+    }
+    ul.benefit-list li {
+      margin: 0.6rem 0;
+    }
+
+    /* ✅ 수량 입력 */
+    .qty-select {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+    .qty-select label {
+      color: #3b6d9c;
+      font-weight: 600;
+    }
+    .qty-select input {
+      width: 70px;
+      text-align: center;
+      border-radius: 6px;
+      border: 1px solid #aac7e6;
+      padding: 6px;
+      color: #2f4e6b;
+      font-weight: 600;
+    }
+
+    .price-line {
+      text-align: center;
+      font-weight: 700;
+      color: #2f4e6b;
+      font-size: 1.05rem;
+      margin-top: 1.8rem;
+    }
+
+    .buy-section {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .buy-btn {
+      background: linear-gradient(135deg, #8ec5eb, #5ea4d8);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.25s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .buy-btn:hover {
+      background: linear-gradient(135deg, #5ea4d8, #3c87c4);
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.85rem;
+      color: #888;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="sub-header">
+    <button class="back-main" onclick="location.href='bio.html'">⬅ 바이오 스킨으로</button>
+    <h1>리프레싱 토너</h1>
+    <p class="subtitle">맑고 투명한 수분 에너지로 피부 결을 정돈하는 첫 단계</p>
+  </header>
+
+  <main class="product-detail">
+    <img src="assets/img/skincare/bio/toner.png" alt="리프레싱 토너">
+
+    <div class="section">
+      <h2>✨ 주요 특징</h2>
+      <ul class="benefit-list">
+        <li><strong>촉촉하고 맑은 피부</strong> — 새로운 수분 에너지로 피부결을 정리</li>
+        <li><strong>데일리 클렌징 후 진정 케어</strong> — 피부 밸런스를 안정시켜 편안한 촉감</li>
+        <li><strong>빠른 흡수감 & 산뜻함</strong> — 끈적임 없이 피부 깊숙이 수분 전달</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🌿 주요 성분</h2>
+      <ul class="benefit-list">
+        <li><strong>포도씨 오일</strong> — 피부에 영양과 진정을 동시에</li>
+        <li><strong>알로에베라</strong> — 자극받은 피부에 수분 진정 효과</li>
+        <li><strong>호호바 오일</strong> — 피부 밸런스를 유지하며 부드러운 윤기 부여</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🧴 사용 방법</h2>
+      <p>아침, 저녁 세안 후 화장솜에 적당량을 덜어 피부 결 방향으로 부드럽게 닦아줍니다.<br>
+      모든 피부 타입에 사용 가능합니다.</p>
+    </div>
+
+    <div class="price-line">💰 가격: ₩34,000</div>
+
+    <div class="qty-select">
+      <label for="qty">수량:</label>
+      <input type="number" id="qty" min="1" value="1">
+    </div>
+
+    <div class="buy-section">
+      <button class="buy-btn" onclick="addToCart()">🛒 주문서에 담기</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 힐리 스킨케어 & 뉴트리션 | 김영숙 · 포항<br>
+    Powered by Healy World Korea</p>
+  </footer>
+
+  <script>
+    function addToCart() {
+      const qty = parseInt(document.getElementById('qty').value);
+      const price = 34000;
+      const name = "리프레싱 토너";
+
+      let cart = JSON.parse(localStorage.getItem('healySelections') || '[]');
+      const existing = cart.find(item => item.name === name);
+
+      if (existing) {
+        existing.qty += qty;
+        existing.total = existing.qty * existing.price;
+      } else {
+        cart.push({ name, qty, price, total: qty * price });
+      }
+
+      localStorage.setItem('healySelections', JSON.stringify(cart));
+      alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
+    }
+  </script>
+
+</body>
+</html>
