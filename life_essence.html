@@ -179,25 +179,63 @@
   </footer>
 
   <script>
-    function addToCart() {
-      const qty = parseInt(document.getElementById('qty').value);
-      const price = 49000;
-      const name = "라이프 에센스";
+  async function addToCart() {
+    const qty = parseInt(document.getElementById('qty').value);
+    const price = 49000;
+    const name = "라이프 에센스";
+    const newItem = { name, qty, price, total: qty * price };
 
+    // ✅ 1. localStorage 우선 시도
+    try {
       let cart = JSON.parse(localStorage.getItem('healySelections') || '[]');
       const existing = cart.find(item => item.name === name);
-
       if (existing) {
         existing.qty += qty;
         existing.total = existing.qty * existing.price;
       } else {
-        cart.push({ name, qty, price, total: qty * price });
+        cart.push(newItem);
       }
-
       localStorage.setItem('healySelections', JSON.stringify(cart));
       alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
+      return;
+    } catch (err) {
+      console.warn("localStorage 접근 불가, IndexedDB로 전환합니다.");
     }
-  </script>
+
+    // ✅ 2. IndexedDB fallback
+    const dbRequest = indexedDB.open("HealyCartDB", 1);
+    dbRequest.onupgradeneeded = (event) => {
+      const db = event.target.result;
+      if (!db.objectStoreNames.contains("cart")) {
+        db.createObjectStore("cart", { keyPath: "name" });
+      }
+    };
+
+    dbRequest.onsuccess = (event) => {
+      const db = event.target.result;
+      const tx = db.transaction("cart", "readwrite");
+      const store = tx.objectStore("cart");
+
+      const getReq = store.get(name);
+      getReq.onsuccess = () => {
+        const existing = getReq.result;
+        if (existing) {
+          existing.qty += qty;
+          existing.total = existing.qty * existing.price;
+          store.put(existing);
+        } else {
+          store.add(newItem);
+        }
+        alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
+      };
+    };
+
+    dbRequest.onerror = () => {
+      alert("⚠️ 저장 오류: 주문서 담기 기능을 사용할 수 없습니다.");
+    };
+  }
+</script>
+
 
 </body>
 </html>
