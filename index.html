@@ -31,6 +31,7 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
     }
 
+    /* 초기화 버튼 – 오렌지 */
     .summary-btns button:nth-child(1) {
       background: linear-gradient(135deg, #ffb07c, #ff8b4c);
     }
@@ -40,6 +41,7 @@
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
     }
 
+    /* 스크린샷 화면 열기 버튼 – 파랑 */
     .summary-btns button:nth-child(2) {
       background: linear-gradient(135deg, #7cc9ff, #4aaaff);
     }
@@ -164,14 +166,14 @@
 
     <div class="summary-btns">
       <button onclick="clearSelections()">선택 초기화</button>
-      <button onclick="saveSummary()">이미지로 저장</button>
+      <button onclick="openScreenshot()">스크린샷 저장 화면 열기</button>
     </div>
   </section>
 
   <script>
-    /* -------------------------------
-       🔥 backup storage (window.name)
-    --------------------------------*/
+    /* ---------------------------
+       window.name 기반 장바구니
+    --------------------------- */
     function getCartItems() {
       try {
         return JSON.parse(window.name || "[]");
@@ -180,23 +182,25 @@
       }
     }
 
+    function saveCartItems(cart) {
+      window.name = JSON.stringify(cart);
+    }
+
     function clearCart() {
       window.name = "[]";
     }
 
-    /* 날짜 */
     function getToday() {
       const now = new Date();
       return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
     }
 
-    /* 이름 입력 */
     document.getElementById("buyerName").addEventListener("input", () => {
       window.buyerName = document.getElementById("buyerName").value.trim();
-      document.getElementById("buyerInfo").textContent = `주문자: ${window.buyerName || ""}`;
+      document.getElementById("buyerInfo").textContent =
+        `주문자: ${window.buyerName || ""}`;
     });
 
-    /* 주문서 로딩 */
     function loadSelections() {
       const cart = getCartItems();
 
@@ -208,7 +212,8 @@
       let total = 0;
 
       document.getElementById("todayDate").textContent = `작성일: ${getToday()}`;
-      document.getElementById("buyerInfo").textContent = `주문자: ${window.buyerName || ""}`;
+      document.getElementById("buyerInfo").textContent =
+        `주문자: ${window.buyerName || ""}`;
 
       if (cart.length === 0) {
         summaryBox.style.display = "none";
@@ -231,30 +236,30 @@
       summaryBox.style.display = "block";
     }
 
-    /* 선택 초기화 */
     function clearSelections() {
       clearCart();
       loadSelections();
     }
 
-    /* 이미지 저장 (WebView 호환 옵션 적용) */
-    function saveSummary() {
+    /* -------------------------------
+       🔥 이미지 새창으로 띄우기 (스크린샷)
+    ------------------------------- */
+    function openScreenshot() {
       const target = document.getElementById("summary");
-      const buyerName = window.buyerName || "healy_order";
 
-      html2canvas(target, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true
-      }).then(canvas => {
-        try {
-          const link = document.createElement("a");
-          link.download = `${buyerName}_주문서.png`;
-          link.href = canvas.toDataURL("image/png");
-          link.click();
-        } catch (e) {
-          alert("⚠️ WebView에서 이미지 다운로드가 제한되었습니다.\n대신 스크린샷을 이용해주세요.");
-        }
+      html2canvas(target, { scale: 2 }).then(canvas => {
+        const imgURL = canvas.toDataURL("image/png");
+
+        const win = window.open("");
+        win.document.write(`
+          <html>
+            <head><title>주문서 스크린샷</title></head>
+            <body style="margin:0; text-align:center; background:#fafafa;">
+              <h3 style="padding:10px; font-family:sans-serif;">📸 아래 이미지를 길게 눌러 저장하세요</h3>
+              <img src="${imgURL}" style="width:95%; max-width:600px; margin-bottom:20px;" />
+            </body>
+          </html>
+        `);
       });
     }
 
