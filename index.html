@@ -174,79 +174,132 @@
   </footer>
 
   <script>
-    // 오늘 날짜 자동 표시
-    function getToday() {
-      const now = new Date();
-      const y = now.getFullYear();
-      const m = String(now.getMonth() + 1).padStart(2, '0');
-      const d = String(now.getDate()).padStart(2, '0');
-      return `${y}-${m}-${d}`;
+  // 오늘 날짜 자동 표시
+  function getToday() {
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth() + 1).padStart(2, '0');
+    const d = String(now.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }
+
+  // ✅ 데이터 로드 (localStorage + IndexedDB 병행)
+  async function loadSelections() {
+    let data = [];
+    try {
+      data = JSON.parse(localStorage.getItem('healySelections') || '[]');
+    } catch (err) {
+      console.warn("localStorage 접근 불가, IndexedDB로 전환");
     }
 
-    // 데이터 로드
-    function loadSelections() {
-      const data = JSON.parse(localStorage.getItem('healySelections') || '[]');
-      const buyerName = localStorage.getItem('buyerName') || '';
-      const tableBody = document.querySelector('#summaryTable tbody');
-      const totalDisplay = document.getElementById('summaryTotal');
-      const nameDisplay = document.getElementById('buyerInfo');
-      const dateDisplay = document.getElementById('todayDate');
-
-      tableBody.innerHTML = '';
-      let total = 0;
-
-      // 이름, 날짜 표시
-      nameDisplay.textContent = buyerName ? `주문자: ${buyerName}` : '주문자: -';
-      dateDisplay.textContent = `작성일: ${getToday()}`;
-
-      if (data.length === 0) {
-        document.getElementById('summary').style.display = 'none';
-        return;
-      }
-
-      data.forEach(item => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${item.name}</td>
-          <td>${item.qty}</td>
-          <td>₩${item.price.toLocaleString()}</td>
-          <td>₩${item.total.toLocaleString()}</td>
-        `;
-        tableBody.appendChild(tr);
-        total += item.total;
-      });
-
-      totalDisplay.textContent = `총 합계: ₩${total.toLocaleString()}`;
-      document.getElementById('summary').style.display = 'block';
+    // localStorage 비어 있으면 IndexedDB에서 불러오기
+    if (data.length === 0) {
+      data = await loadFromIndexedDB();
     }
 
-    // 이름 입력 시 저장 및 주문서 반영
-    document.getElementById('buyerName').addEventListener('input', (e) => {
-      const name = e.target.value.trim();
-      localStorage.setItem('buyerName', name);
-      document.getElementById('buyerInfo').textContent = `주문자: ${name || '-'}`;
+    const buyerName = localStorage.getItem('buyerName') || '';
+    const tableBody = document.querySelector('#summaryTable tbody');
+    const totalDisplay = document.getElementById('summaryTotal');
+    const nameDisplay = document.getElementById('buyerInfo');
+    const dateDisplay = document.getElementById('todayDate');
+
+    tableBody.innerHTML = '';
+    let total = 0;
+
+    nameDisplay.textContent = buyerName ? `주문자: ${buyerName}` : '주문자: -';
+    dateDisplay.textContent = `작성일: ${getToday()}`;
+
+    if (data.length === 0) {
+      document.getElementById('summary').style.display = 'none';
+      return;
+    }
+
+    data.forEach(item => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${item.name}</td>
+        <td>${item.qty}</td>
+        <td>₩${item.price.toLocaleString()}</td>
+        <td>₩${item.total.toLocaleString()}</td>
+      `;
+      tableBody.appendChild(tr);
+      total += item.total;
     });
 
-    // 초기화
-    function clearSelections() {
-      localStorage.removeItem('healySelections');
-      alert("선택이 초기화되었습니다.");
-      loadSelections();
-    }
+    totalDisplay.textContent = `총 합계: ₩${total.toLocaleString()}`;
+    document.getElementById('summary').style.display = 'block';
+  }
 
-    // 이미지 저장 (정상 작동)
-    function saveSummary() {
-      const target = document.getElementById('summary'); // 주문서만 캡처
-      const buyerName = localStorage.getItem('buyerName') || 'healy_order';
-      html2canvas(target, { scale: 2, useCORS: true }).then(canvas => {
-        const link = document.createElement('a');
-        link.download = `${buyerName}_주문서.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-      });
-    }
+  // ✅ IndexedDB에서 데이터 불러오기
+  function loadFromIndexedDB() {
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.open("HealyCartDB", 1);
+      req.onupgradeneeded = e => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains("cart")) {
+          db.createObjectStore("cart", { keyPath: "name" });
+        }
+      };
+      req.onsuccess = e => {
+        const db = e.target.result;
+        const tx = db.transaction("cart", "readonly");
+        const store = tx.objectStore("cart");
+        const getAll = store.getAll();
+        getAll.onsuccess = () => resolve(getAll.result || []);
+        getAll.onerror = () => reject([]);
+      };
+      req.onerror = () => reject([]);
+    });
+  }
 
-    window.onload = loadSelections;
-  </script>
+  // 이름 입력 시 저장 및 주문서 반영
+  document.getElementById('buyerName').addEventListener('input', (e) => {
+    const name = e.target.value.trim();
+    localStorage.setItem('buyerName', name);
+    document.getElementById('buyerInfo').textContent = `주문자: ${name || '-'}`;
+  });
+
+  // 초기화
+  function clearSelections() {
+  // 1️⃣ 화면 즉시 반영 (UI와 alert 우선)
+  document.querySelector('#summaryTable tbody').innerHTML = '';
+  document.getElementById('summaryTotal').textContent = '';
+  document.getElementById('summary').style.display = 'none';
+  alert("선택이 초기화되었습니다.");
+
+  // 2️⃣ localStorage 즉시 초기화
+  localStorage.removeItem('healySelections');
+
+  // 3️⃣ IndexedDB는 백그라운드에서 정리 (느려도 상관 없음)
+  try {
+    const req = indexedDB.open("HealyCartDB", 1);
+    req.onsuccess = (e) => {
+      const db = e.target.result;
+      const tx = db.transaction("cart", "readwrite");
+      tx.objectStore("cart").clear();
+    };
+  } catch (err) {
+    console.warn("IndexedDB 초기화 중 오류:", err);
+  }
+}
+
+
+
+
+  // 이미지 저장
+  function saveSummary() {
+    const target = document.getElementById('summary');
+    const buyerName = localStorage.getItem('buyerName') || 'healy_order';
+    html2canvas(target, { scale: 2, useCORS: true }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = `${buyerName}_주문서.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  }
+
+  window.onload = loadSelections;
+</script>
+
 </body>
 </html>
