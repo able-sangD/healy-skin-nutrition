@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Healy Skin & Nutrition</title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/cart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <style>
-    .main-header { margin-bottom: 1rem; }
+    .summary-btns button {
+      background: linear-gradient(135deg, #e49c87, #d18874);
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: 0.25s;
+    }
+
+    .summary-btns button:hover {
+      background: linear-gradient(135deg, #d18874, #b65f4a);
+      transform: scale(1.05);
+    }
+
+    .main-header {
+      margin-bottom: 1rem;
+    }
 
     .name-box {
       width: 90%;
@@ -16,25 +38,18 @@
       margin: 1.5rem auto 0;
       background: #fffefc;
       border-radius: 14px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
       padding: 1rem;
       text-align: center;
     }
-    .name-box label {
-      color: #b65f4a;
-      font-weight: 600;
-      font-size: 1rem;
-    }
+
     .name-box input {
       width: 60%;
       max-width: 240px;
       padding: 9px 10px;
-      margin-left: 0.5rem;
       border-radius: 8px;
       border: 1px solid #ccc;
       text-align: center;
-      font-size: 0.95rem;
-      transition: 0.2s;
     }
 
     .summary-box {
@@ -44,62 +59,43 @@
       margin: 2rem auto;
       background: #fffefc;
       border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       padding: 1.2rem;
       text-align: center;
-    }
-    .summary-box h2 {
-      color: #b65f4a;
-      margin-bottom: 0.3rem;
     }
 
     #summaryTable {
       width: 100%;
+      border-collapse: collapse;
       table-layout: fixed;
-      margin-top: 0.5rem;
     }
+
     #summaryTable th,
     #summaryTable td {
-      padding: 8px 6px;
-      font-size: 0.9rem;
-    }
-    #summaryTable th:nth-child(1),
-    #summaryTable th:nth-child(2),
-    #summaryTable td:nth-child(1),
-    #summaryTable td:nth-child(2) {
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+      word-break: break-word;
       text-align: center;
     }
-    #summaryTable th:nth-child(3),
-    #summaryTable th:nth-child(4),
-    #summaryTable td:nth-child(3),
-    #summaryTable td:nth-child(4) {
-      text-align: right;
-      padding-right: 10px;
+
+    #summaryTable th:nth-child(1) {
+      width: 40%;
     }
 
-    .summary-btns {
-      margin-top: 1.2rem;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-    .summary-btns button {
-      background: linear-gradient(135deg, #e49c87, #d18874);
-      color: #fff;
-      border: none;
-      padding: 10px 22px;
-      border-radius: 30px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.25s;
+    #summaryTable th:nth-child(2) {
+      width: 15%;
     }
 
-    /* 주문자 라벨 숨기기용 */
-    #buyerInfo.hidden {
-      display: none;
+    #summaryTable th:nth-child(3) {
+      width: 20%;
+    }
+
+    #summaryTable th:nth-child(4) {
+      width: 25%;
     }
   </style>
 </head>
+
 <body>
 
   <header class="main-header">
@@ -128,7 +124,7 @@
 
   <section id="summary" class="summary-box">
     <h2>🧾 주문서</h2>
-    <div class="buyer-line hidden" id="buyerInfo"></div>
+    <div class="buyer-line" id="buyerInfo">주문자: </div>
     <div class="date-line" id="todayDate">주문일: -</div>
 
     <table id="summaryTable">
@@ -151,105 +147,95 @@
     </div>
   </section>
 
-  <footer>
-    <p>© 2025 힐리 스킨케어 & 뉴트리션 | 김영숙 · 포항</p>
-  </footer>
-
-<script>
-function getToday() {
-  const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
-}
-
-/* 이름 저장 */
-document.getElementById("buyerName").addEventListener("input", () => {
-  const name = document.getElementById("buyerName").value.trim();
-  window.buyerName = name;
-
-  const buyerInfo = document.getElementById("buyerInfo");
-
-  if (name) {
-    buyerInfo.textContent = `주문자: ${name}`;
-    buyerInfo.classList.remove("hidden");
-  } else {
-    buyerInfo.textContent = "";
-    buyerInfo.classList.add("hidden");
-  }
-});
-
-/* 장바구니 로드 */
-function loadSelections() {
-
-  let cart = [];
-  try {
-    if (typeof window.name === "string" && window.name.trim() !== "") {
-      cart = JSON.parse(window.name);
+  <script>
+    // ------------------------
+    // 🔥 localStorage 기반으로 통일
+    // ------------------------
+    function getCartItems() {
+      try {
+        return JSON.parse(localStorage.getItem("healySelections") || "[]");
+      } catch {
+        return [];
+      }
     }
-  } catch {
-    cart = [];
-  }
 
-  const tbody = document.querySelector("#summaryTable tbody");
-  const totalDisplay = document.getElementById("summaryTotal");
-  const summaryBox = document.getElementById("summary");
-  const buyerInfo = document.getElementById("buyerInfo");
+    function saveCartItems(cart) {
+      localStorage.setItem("healySelections", JSON.stringify(cart));
+    }
 
-  tbody.innerHTML = "";
-  let total = 0;
+    function clearCart() {
+      localStorage.removeItem("healySelections");
+    }
 
-  document.getElementById("todayDate").textContent = `주문일: ${getToday()}`;
+    // ------------------------
+    function getToday() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    }
 
-  if (window.buyerName) {
-    buyerInfo.textContent = `주문자: ${window.buyerName}`;
-    buyerInfo.classList.remove("hidden");
-  } else {
-    buyerInfo.textContent = "";
-    buyerInfo.classList.add("hidden");
-  }
+    // ------------------------
+    document.getElementById("buyerName").addEventListener("input", () => {
+      window.buyerName = document.getElementById("buyerName").value.trim();
+      document.getElementById("buyerInfo").textContent = `주문자: ${window.buyerName || ""}`;
+    });
 
-  if (cart.length === 0) {
-    summaryBox.style.display = "none";
-    return;
-  }
+    // ------------------------
+    function loadSelections() {
+      const cart = getCartItems();
 
-  cart.forEach(item => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
+      const tbody = document.querySelector("#summaryTable tbody");
+      const totalDisplay = document.getElementById("summaryTotal");
+      const summaryBox = document.getElementById("summary");
+
+      tbody.innerHTML = "";
+      let total = 0;
+
+      document.getElementById("todayDate").textContent = `작성일: ${getToday()}`;
+      document.getElementById("buyerInfo").textContent = `주문자: ${window.buyerName || ""}`;
+
+      if (cart.length === 0) {
+        summaryBox.style.display = "none";
+        return;
+      }
+
+      cart.forEach(item => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
       <td>${item.name}</td>
       <td>${item.qty}</td>
       <td>₩${item.price.toLocaleString()}</td>
       <td>₩${item.total.toLocaleString()}</td>
     `;
-    tbody.appendChild(tr);
-    total += item.total;
-  });
+        tbody.appendChild(tr);
+        total += item.total;
+      });
 
-  totalDisplay.textContent = `총 합계: ₩${total.toLocaleString()}`;
-  summaryBox.style.display = "block";
-}
+      totalDisplay.textContent = `총 합계: ₩${total.toLocaleString()}`;
+      summaryBox.style.display = "block";
+    }
 
-/* 초기화 */
-function clearSelections() {
-  window.name = "";
-  alert("선택이 초기화되었습니다.");
-  loadSelections();
-}
+    // ------------------------
+    function clearSelections() {
+      clearCart();
+      loadSelections();
+    }
 
-/* 이미지 저장 */
-function saveSummary() {
-  const target = document.getElementById("summary");
-  const buyerName = window.buyerName || "healy_order";
+    // ------------------------
+    function saveSummary() {
+      const target = document.getElementById("summary");
+      const buyerName = window.buyerName || "healy_order";
 
-  html2canvas(target, { scale: 2 }).then(canvas => {
-    const link = document.createElement("a");
-    link.download = `${buyerName}_주문서.png`;
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-  });
-}
+      html2canvas(target, { scale: 2 }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = `${buyerName}_주문서.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    }
 
-window.onload = loadSelections;
-</script>
+    window.onload = loadSelections;
+  </script>
 
 </body>
+
 </html>
