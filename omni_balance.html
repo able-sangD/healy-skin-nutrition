@@ -167,26 +167,38 @@
 
   <!-- 🔥 JS만 수정된 영역 -->
   <script>
-    function addToCart() {
+/* -----------------------------------
+   🔥 WebView 완전호환 장바구니 (window.name)
+----------------------------------- */
+function addToCart() {
+  const qty = parseInt(document.getElementById('qty').value);
+  const price = 99000;
+  const name = "옴니 밸런스 360°";
 
-      const qty = parseInt(document.getElementById('qty').value);
-      const price = 99000;
-      const name = "옴니 밸런스 360°";
+  let cart = [];
 
-      let cart = JSON.parse(localStorage.getItem('healySelections') || '[]');
-      const existing = cart.find(item => item.name === name);
+  // 기존 cart 불러오기
+  try {
+    cart = JSON.parse(window.name || "[]");
+  } catch {
+    cart = [];
+  }
 
-      if (existing) {
-        existing.qty += qty;
-        existing.total = existing.qty * existing.price;
-      } else {
-        cart.push({ name, qty, price, total: qty * price });
-      }
+  const existing = cart.find(item => item.name === name);
 
-      localStorage.setItem('healySelections', JSON.stringify(cart));
-      alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
-    }
-  </script>
+  if (existing) {
+    existing.qty += qty;
+    existing.total = existing.qty * existing.price;
+  } else {
+    cart.push({ name, qty, price, total: qty * price });
+  }
+
+  // 저장
+  window.name = JSON.stringify(cart);
+
+  alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
+}
+</script>
 
 </body>
 </html>
