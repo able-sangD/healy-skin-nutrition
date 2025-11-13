@@ -179,69 +179,28 @@
     Powered by Healy World Korea</p>
   </footer>
 
+  <!-- 🔥 JS만 localStorage 통일 방식으로 적용 -->
   <script>
-async function addToCart() {
-  const qty = parseInt(document.getElementById('qty').value);
-  const price = 32000;
-  const name = "데드 씨 배스 솔트";
-  const newItem = { name, qty, price, total: qty * price };
+    function addToCart() {
 
-  // ✅ 1. sessionStorage 우선 (앱 WebView 호환)
-  try {
-    let cart = JSON.parse(sessionStorage.getItem('healySelections') || '[]');
-    const existing = cart.find(item => item.name === name);
+      const qty = parseInt(document.getElementById('qty').value);
+      const price = 32000;
+      const name = "데드 씨 배스 솔트";
 
-    if (existing) {
-      existing.qty += qty;
-      existing.total = existing.qty * existing.price;
-    } else {
-      cart.push(newItem);
-    }
+      let cart = JSON.parse(localStorage.getItem('healySelections') || '[]');
+      const existing = cart.find(item => item.name === name);
 
-    sessionStorage.setItem('healySelections', JSON.stringify(cart));
-    localStorage.setItem('healySelections', JSON.stringify(cart)); // 백업용
-
-    alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
-    return;
-  } catch (err) {
-    console.warn("sessionStorage 접근 실패, IndexedDB로 전환:", err);
-  }
-
-  // ✅ 2. IndexedDB fallback (WebView 보안 모드일 경우)
-  const dbRequest = indexedDB.open("HealyCartDB", 1);
-  dbRequest.onupgradeneeded = (event) => {
-    const db = event.target.result;
-    if (!db.objectStoreNames.contains("cart")) {
-      db.createObjectStore("cart", { keyPath: "name" });
-    }
-  };
-
-  dbRequest.onsuccess = (event) => {
-    const db = event.target.result;
-    const tx = db.transaction("cart", "readwrite");
-    const store = tx.objectStore("cart");
-
-    const getReq = store.get(name);
-    getReq.onsuccess = () => {
-      const existing = getReq.result;
       if (existing) {
         existing.qty += qty;
         existing.total = existing.qty * existing.price;
-        store.put(existing);
       } else {
-        store.add(newItem);
+        cart.push({ name, qty, price, total: qty * price });
       }
+
+      localStorage.setItem('healySelections', JSON.stringify(cart));
       alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
-    };
-  };
-
-  dbRequest.onerror = () => {
-    alert("⚠️ 저장 오류: 주문서 담기 기능을 사용할 수 없습니다.");
-  };
-}
-</script>
-
-
+    }
+  </script>
 
 </body>
 </html>
