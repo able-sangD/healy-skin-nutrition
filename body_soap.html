@@ -178,26 +178,38 @@
 
   <!-- 🔥 JS만 localStorage 기반으로 수정 -->
   <script>
-    function addToCart() {
+/* -----------------------------------
+   🔥 WebView 완전호환 장바구니 (window.name)
+----------------------------------- */
+function addToCart() {
+  const qty = parseInt(document.getElementById('qty').value);
+  const price = 15300;
+  const name = "미네랄 솝";
 
-      const qty = parseInt(document.getElementById('qty').value);
-      const price = 15300;
-      const name = "미네랄 솝";
+  let cart = [];
 
-      let cart = JSON.parse(localStorage.getItem('healySelections') || '[]');
-      const existing = cart.find(item => item.name === name);
+  // 기존 cart 불러오기
+  try {
+    cart = JSON.parse(window.name || "[]");
+  } catch {
+    cart = [];
+  }
 
-      if (existing) {
-        existing.qty += qty;
-        existing.total = existing.qty * existing.price;
-      } else {
-        cart.push({ name, qty, price, total: qty * price });
-      }
+  const existing = cart.find(item => item.name === name);
 
-      localStorage.setItem('healySelections', JSON.stringify(cart));
-      alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
-    }
-  </script>
+  if (existing) {
+    existing.qty += qty;
+    existing.total = existing.qty * existing.price;
+  } else {
+    cart.push({ name, qty, price, total: qty * price });
+  }
+
+  // 저장
+  window.name = JSON.stringify(cart);
+
+  alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
+}
+</script>
 
 </body>
 </html>
