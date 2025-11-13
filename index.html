@@ -35,7 +35,7 @@
       background: linear-gradient(135deg, #ffb07c, #ff8b4c);
     }
 
-    /* 이미지 저장 버튼 – 하늘색 계열 */
+    /* 스크린샷 버튼 – 하늘색 계열 */
     .summary-btns button:nth-child(2) {
       background: linear-gradient(135deg, #7cc9ff, #4aaaff);
     }
@@ -91,21 +91,10 @@
       text-align: center;
     }
 
-    #summaryTable th:nth-child(1) {
-      width: 40%;
-    }
-
-    #summaryTable th:nth-child(2) {
-      width: 15%;
-    }
-
-    #summaryTable th:nth-child(3) {
-      width: 20%;
-    }
-
-    #summaryTable th:nth-child(4) {
-      width: 25%;
-    }
+    #summaryTable th:nth-child(1) { width: 40%; }
+    #summaryTable th:nth-child(2) { width: 15%; }
+    #summaryTable th:nth-child(3) { width: 20%; }
+    #summaryTable th:nth-child(4) { width: 25%; }
   </style>
 </head>
 
@@ -161,15 +150,12 @@
   </section>
 
   <script>
-    /* -----------------------------------
+    /* ------------------------------
        🔥 장바구니 (window.name)
-    ----------------------------------- */
+    ------------------------------ */
     function getCartItems() {
-      try {
-        return JSON.parse(window.name || "[]");
-      } catch {
-        return [];
-      }
+      try { return JSON.parse(window.name || "[]"); }
+      catch { return []; }
     }
 
     function saveCartItems(cart) {
@@ -183,7 +169,7 @@
     /* 날짜 */
     function getToday() {
       const now = new Date();
-      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+      return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
     }
 
     /* 이름 입력 */
@@ -232,14 +218,14 @@
       loadSelections();
     }
 
-    /* -----------------------------------
-       🔥 버튼 숨기고 스크린샷 → 새 창에서 보기
-    ----------------------------------- */
+    /* ------------------------------
+       🔥 스크린샷 페이지 생성 + 중앙 버튼
+    ------------------------------ */
     function openScreenshot() {
       const target = document.getElementById("summary");
       const btnBox = document.querySelector(".summary-btns");
 
-      btnBox.style.display = "none"; // 1) 버튼 숨기기
+      btnBox.style.display = "none";
 
       setTimeout(() => {
         html2canvas(target, { scale: 2 }).then(canvas => {
@@ -249,14 +235,34 @@
           win.document.write(`
             <html>
               <head><title>주문서 스크린샷</title></head>
-              <body style="margin:0; text-align:center; background:#fafafa;">
-                <h3 style="padding:10px; font-family:sans-serif;">📸 스크린샷으로 저장하세요</h3>
-                <img src="${imgURL}" style="width:95%; max-width:600px; margin-bottom:20px;" />
+              <body style="margin:0; text-align:center; background:#fafafa; font-family:sans-serif;">
+                <h3 style="padding:10px;">📸 스크린샷으로 저장하세요</h3>
+
+                <img src="${imgURL}" 
+                     style="width:95%; max-width:600px; margin:20px auto; display:block;" />
+
+                <div style="margin-top:25px; text-align:center;">
+                  <button onclick="location.href='index.html'"
+                    style="
+                      padding: 12px 28px;
+                      border:none;
+                      border-radius:25px;
+                      font-size:1rem;
+                      font-weight:600;
+                      background:#4aaaff;
+                      color:white;
+                      cursor:pointer;
+                      box-shadow:0 4px 10px rgba(0,0,0,0.18);
+                    ">
+                    ⬅ 뒤로가기 (메인으로)
+                  </button>
+                </div>
+
               </body>
             </html>
           `);
 
-          btnBox.style.display = "flex"; // 3) 캡처 후 다시 표시
+          btnBox.style.display = "flex";
         });
       }, 80);
     }
@@ -265,5 +271,4 @@
   </script>
 
 </body>
-
 </html>
