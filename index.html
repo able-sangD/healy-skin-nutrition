@@ -10,8 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <style>
-    /* 🔥 주문서 버튼 스타일 업그레이드 */
-
+    /* 🔥 주문서 버튼 스타일 */
     .summary-btns {
       margin-top: 1.4rem;
       display: flex;
@@ -31,24 +30,14 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
     }
 
-    /* 초기화 버튼 – 오렌지 */
+    /* 초기화 버튼 – 오렌지 계열 */
     .summary-btns button:nth-child(1) {
       background: linear-gradient(135deg, #ffb07c, #ff8b4c);
     }
 
-    .summary-btns button:nth-child(1):active {
-      transform: scale(0.94);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
-    }
-
-    /* 스크린샷 화면 열기 버튼 – 파랑 */
+    /* 이미지 저장 버튼 – 하늘색 계열 */
     .summary-btns button:nth-child(2) {
       background: linear-gradient(135deg, #7cc9ff, #4aaaff);
-    }
-
-    .summary-btns button:nth-child(2):active {
-      transform: scale(0.94);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
     }
 
     .main-header {
@@ -75,6 +64,7 @@
       text-align: center;
     }
 
+    /* 주문서 박스 */
     .summary-box {
       display: none;
       width: 90%;
@@ -166,14 +156,14 @@
 
     <div class="summary-btns">
       <button onclick="clearSelections()">선택 초기화</button>
-      <button onclick="openScreenshot()">스크린샷 저장 화면 열기</button>
+      <button onclick="openScreenshot()">스크린샷 페이지</button>
     </div>
   </section>
 
   <script>
-    /* ---------------------------
-       window.name 기반 장바구니
-    --------------------------- */
+    /* -----------------------------------
+       🔥 장바구니 (window.name)
+    ----------------------------------- */
     function getCartItems() {
       try {
         return JSON.parse(window.name || "[]");
@@ -190,20 +180,21 @@
       window.name = "[]";
     }
 
+    /* 날짜 */
     function getToday() {
       const now = new Date();
       return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
     }
 
+    /* 이름 입력 */
     document.getElementById("buyerName").addEventListener("input", () => {
       window.buyerName = document.getElementById("buyerName").value.trim();
-      document.getElementById("buyerInfo").textContent =
-        `주문자: ${window.buyerName || ""}`;
+      document.getElementById("buyerInfo").textContent = `주문자: ${window.buyerName || ""}`;
     });
 
+    /* 주문서 로딩 */
     function loadSelections() {
       const cart = getCartItems();
-
       const tbody = document.querySelector("#summaryTable tbody");
       const totalDisplay = document.getElementById("summaryTotal");
       const summaryBox = document.getElementById("summary");
@@ -212,8 +203,7 @@
       let total = 0;
 
       document.getElementById("todayDate").textContent = `작성일: ${getToday()}`;
-      document.getElementById("buyerInfo").textContent =
-        `주문자: ${window.buyerName || ""}`;
+      document.getElementById("buyerInfo").textContent = `주문자: ${window.buyerName || ""}`;
 
       if (cart.length === 0) {
         summaryBox.style.display = "none";
@@ -236,35 +226,44 @@
       summaryBox.style.display = "block";
     }
 
+    /* 초기화 */
     function clearSelections() {
       clearCart();
       loadSelections();
     }
 
-    /* -------------------------------
-       🔥 이미지 새창으로 띄우기 (스크린샷)
-    ------------------------------- */
+    /* -----------------------------------
+       🔥 버튼 숨기고 스크린샷 → 새 창에서 보기
+    ----------------------------------- */
     function openScreenshot() {
       const target = document.getElementById("summary");
+      const btnBox = document.querySelector(".summary-btns");
 
-      html2canvas(target, { scale: 2 }).then(canvas => {
-        const imgURL = canvas.toDataURL("image/png");
+      btnBox.style.display = "none"; // 1) 버튼 숨기기
 
-        const win = window.open("");
-        win.document.write(`
-          <html>
-            <head><title>주문서 스크린샷</title></head>
-            <body style="margin:0; text-align:center; background:#fafafa;">
-              <h3 style="padding:10px; font-family:sans-serif;">📸 아래 이미지를 길게 눌러 저장하세요</h3>
-              <img src="${imgURL}" style="width:95%; max-width:600px; margin-bottom:20px;" />
-            </body>
-          </html>
-        `);
-      });
+      setTimeout(() => {
+        html2canvas(target, { scale: 2 }).then(canvas => {
+          const imgURL = canvas.toDataURL("image/png");
+
+          const win = window.open("");
+          win.document.write(`
+            <html>
+              <head><title>주문서 스크린샷</title></head>
+              <body style="margin:0; text-align:center; background:#fafafa;">
+                <h3 style="padding:10px; font-family:sans-serif;">📸 스크린샷으로 저장하세요</h3>
+                <img src="${imgURL}" style="width:95%; max-width:600px; margin-bottom:20px;" />
+              </body>
+            </html>
+          `);
+
+          btnBox.style.display = "flex"; // 3) 캡처 후 다시 표시
+        });
+      }, 80);
     }
 
     window.onload = loadSelections;
   </script>
 
 </body>
+
 </html>
