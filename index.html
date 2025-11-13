@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,50 @@
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <style>
-    .main-header { margin-bottom: 1rem; }
+    /* 🔥 주문서 버튼 스타일 업그레이드 */
+
+    .summary-btns {
+      margin-top: 1.4rem;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .summary-btns button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 25px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.25s;
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    }
+
+    /* 초기화 버튼 – 오렌지 계열 */
+    .summary-btns button:nth-child(1) {
+      background: linear-gradient(135deg, #ffb07c, #ff8b4c);
+    }
+
+    .summary-btns button:nth-child(1):active {
+      transform: scale(0.94);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+    }
+
+    /* 이미지 저장 버튼 – 하늘색 계열 */
+    .summary-btns button:nth-child(2) {
+      background: linear-gradient(135deg, #7cc9ff, #4aaaff);
+    }
+
+    .summary-btns button:nth-child(2):active {
+      transform: scale(0.94);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+    }
+
+    .main-header {
+      margin-bottom: 1rem;
+    }
 
     .name-box {
       width: 90%;
@@ -17,10 +61,11 @@
       margin: 1.5rem auto 0;
       background: #fffefc;
       border-radius: 14px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
       padding: 1rem;
       text-align: center;
     }
+
     .name-box input {
       width: 60%;
       max-width: 240px;
@@ -38,7 +83,7 @@
       margin: 2rem auto;
       background: #fffefc;
       border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       padding: 1.2rem;
       text-align: center;
     }
@@ -49,19 +94,33 @@
       border-collapse: collapse;
       table-layout: fixed;
     }
-    #summaryTable th, #summaryTable td {
+
+    #summaryTable th,
+    #summaryTable td {
       padding: 8px;
       border-bottom: 1px solid #eee;
       word-break: break-word;
       text-align: center;
     }
 
-    #summaryTable th:nth-child(1) { width: 40%; }
-    #summaryTable th:nth-child(2) { width: 15%; }
-    #summaryTable th:nth-child(3) { width: 20%; }
-    #summaryTable th:nth-child(4) { width: 25%; }
+    #summaryTable th:nth-child(1) {
+      width: 40%;
+    }
+
+    #summaryTable th:nth-child(2) {
+      width: 15%;
+    }
+
+    #summaryTable th:nth-child(3) {
+      width: 20%;
+    }
+
+    #summaryTable th:nth-child(4) {
+      width: 25%;
+    }
   </style>
 </head>
+
 <body>
 
   <header class="main-header">
@@ -113,108 +172,109 @@
     </div>
   </section>
 
-<script>
-// --------------------------------------
-// 🔥 외부 cart.js가 WebView에서 로드되지 않을 때 사용되는 내부 백업 로직
-// --------------------------------------
-function getCartItems() {
-  try {
-    return JSON.parse(window.name || "[]");
-  } catch {
-    return [];
-  }
-}
+  <script>
+    // --------------------------------------
+    // 🔥 외부 cart.js가 WebView에서 로드되지 않을 때 사용되는 내부 백업 로직
+    // --------------------------------------
+    function getCartItems() {
+      try {
+        return JSON.parse(window.name || "[]");
+      } catch {
+        return [];
+      }
+    }
 
-function saveCartItems(cart) {
-  window.name = JSON.stringify(cart);
-}
+    function saveCartItems(cart) {
+      window.name = JSON.stringify(cart);
+    }
 
-function clearCart() {
-  window.name = "[]";
-}
+    function clearCart() {
+      window.name = "[]";
+    }
 
-// --------------------------------------
-// 🔥 날짜 함수
-// --------------------------------------
-function getToday() {
-  const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
-}
+    // --------------------------------------
+    // 🔥 날짜 함수
+    // --------------------------------------
+    function getToday() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    }
 
-// --------------------------------------
-// 🔥 이름 입력
-// --------------------------------------
-document.getElementById("buyerName").addEventListener("input", () => {
-  window.buyerName = document.getElementById("buyerName").value.trim();
-  document.getElementById("buyerInfo").textContent = `주문자: ${window.buyerName || ""}`;
-});
+    // --------------------------------------
+    // 🔥 이름 입력
+    // --------------------------------------
+    document.getElementById("buyerName").addEventListener("input", () => {
+      window.buyerName = document.getElementById("buyerName").value.trim();
+      document.getElementById("buyerInfo").textContent = `주문자: ${window.buyerName || ""}`;
+    });
 
-// --------------------------------------
-// 🔥 주문서 로딩
-// --------------------------------------
-function loadSelections() {
-  const cart = getCartItems();
+    // --------------------------------------
+    // 🔥 주문서 로딩
+    // --------------------------------------
+    function loadSelections() {
+      const cart = getCartItems();
 
-  const tbody = document.querySelector("#summaryTable tbody");
-  const totalDisplay = document.getElementById("summaryTotal");
-  const summaryBox = document.getElementById("summary");
+      const tbody = document.querySelector("#summaryTable tbody");
+      const totalDisplay = document.getElementById("summaryTotal");
+      const summaryBox = document.getElementById("summary");
 
-  tbody.innerHTML = "";
-  let total = 0;
+      tbody.innerHTML = "";
+      let total = 0;
 
-  document.getElementById("todayDate").textContent = `작성일: ${getToday()}`;
-  document.getElementById("buyerInfo").textContent = `주문자: ${window.buyerName || ""}`;
+      document.getElementById("todayDate").textContent = `작성일: ${getToday()}`;
+      document.getElementById("buyerInfo").textContent = `주문자: ${window.buyerName || ""}`;
 
-  if (cart.length === 0) {
-    summaryBox.style.display = "none";
-    return;
-  }
+      if (cart.length === 0) {
+        summaryBox.style.display = "none";
+        return;
+      }
 
-  cart.forEach(item => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
+      cart.forEach(item => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
       <td>${item.name}</td>
       <td>${item.qty}</td>
       <td>₩${item.price.toLocaleString()}</td>
       <td>₩${item.total.toLocaleString()}</td>
     `;
-    tbody.appendChild(tr);
-    total += item.total;
-  });
+        tbody.appendChild(tr);
+        total += item.total;
+      });
 
-  totalDisplay.textContent = `총 합계: ₩${total.toLocaleString()}`;
-  summaryBox.style.display = "block";
-}
+      totalDisplay.textContent = `총 합계: ₩${total.toLocaleString()}`;
+      summaryBox.style.display = "block";
+    }
 
-// --------------------------------------
-// 🔥 선택 초기화
-// --------------------------------------
-function clearSelections() {
-  clearCart();
-  loadSelections();
-}
+    // --------------------------------------
+    // 🔥 선택 초기화
+    // --------------------------------------
+    function clearSelections() {
+      clearCart();
+      loadSelections();
+    }
 
-// --------------------------------------
-// 🔥 이미지 저장
-// --------------------------------------
-function saveSummary() {
-  const target = document.getElementById("summary");
-  const buyerName = window.buyerName || "healy_order";
+    // --------------------------------------
+    // 🔥 이미지 저장
+    // --------------------------------------
+    function saveSummary() {
+      const target = document.getElementById("summary");
+      const buyerName = window.buyerName || "healy_order";
 
-  html2canvas(target, { scale: 2 }).then(canvas => {
-    const link = document.createElement("a");
-    link.download = `${buyerName}_주문서.png`;
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-  });
-}
+      html2canvas(target, { scale: 2 }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = `${buyerName}_주문서.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    }
 
-// --------------------------------------
-// 🔥 페이지 로드시 주문서 표시
-// --------------------------------------
-window.onload = loadSelections;
-</script>
+    // --------------------------------------
+    // 🔥 페이지 로드시 주문서 표시
+    // --------------------------------------
+    window.onload = loadSelections;
+  </script>
 
 
 </body>
+
 </html>
