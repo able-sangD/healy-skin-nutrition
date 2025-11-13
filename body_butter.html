@@ -42,11 +42,6 @@
       font-size: 1.6rem;
       margin-bottom: 0.3rem;
     }
-    .product-detail p.subtitle {
-      color: #e49c87;
-      font-size: 1rem;
-      margin-bottom: 1.5rem;
-    }
     .section {
       margin-top: 2.2rem;
       text-align: left;
@@ -64,11 +59,9 @@
     ul.benefit-list {
       list-style: none;
       padding: 0;
-      color: #555;
     }
     ul.benefit-list li {
       margin: 0.6rem 0;
-      font-size: 0.95rem;
     }
     .qty-select {
       margin-top: 1.5rem;
@@ -76,10 +69,6 @@
       justify-content: center;
       align-items: center;
       gap: 10px;
-    }
-    .qty-select label {
-      color: #b65f4a;
-      font-weight: 600;
     }
     .qty-select input {
       width: 70px;
@@ -127,39 +116,40 @@
 
   <main class="product-detail">
     <img src="assets/img/skincare/body/butter.png" alt="너리싱 바디 버터 파머그래넛">
+
     <p>사해 미네랄과 천연 식물 오일이 함유된 고보습 포뮬러로<br>
     건조한 피부에 풍부한 영양과 윤기를 채워주는 바디 버터입니다.</p>
 
     <div class="section">
       <h2>✨ 주요 특징</h2>
       <ul class="benefit-list">
-        <li><strong>리치 보습 케어</strong> — 피부 깊숙이 수분과 영양을 공급</li>
-        <li><strong>탄력 강화</strong> — 꾸준한 사용으로 매끄럽고 탄력 있는 피부 완성</li>
-        <li><strong>은은한 향기</strong> — 석류의 달콤한 향이 하루 종일 지속</li>
+        <li><strong>리치 보습 케어</strong> — 피부 깊숙이 수분과 영양 공급</li>
+        <li><strong>탄력 강화</strong> — 부드럽고 탄력 있는 피부 완성</li>
+        <li><strong>은은한 향기</strong> — 석류의 달콤한 향 지속</li>
       </ul>
     </div>
 
     <div class="section">
       <h2>🌿 주요 성분</h2>
       <ul class="benefit-list">
-        <li><strong>시어 버터</strong> – 보습력 강화 및 피부 장벽 보호</li>
-        <li><strong>알로에베라잎즙</strong> – 피부 진정 및 수분 공급</li>
-        <li><strong>코코넛야자오일</strong> – 영양 보충 및 윤기 부여</li>
-        <li><strong>아보카도 오일</strong> – 풍부한 비타민으로 탄력 개선</li>
+        <li><strong>시어 버터</strong> – 보습·장벽 강화</li>
+        <li><strong>알로에베라잎즙</strong> – 수분 공급·진정</li>
+        <li><strong>코코넛야자오일</strong> – 윤기·영양</li>
+        <li><strong>아보카도 오일</strong> – 비타민 풍부·탄력 개선</li>
       </ul>
     </div>
 
     <div class="section">
       <h2>🧴 사용 방법</h2>
-      <p>샤워 후 물기를 닦은 피부에 적당량을 덜어 부드럽게 마사지하듯 펴 발라주세요.<br>
-      건조한 부위(팔꿈치, 무릎 등)는 한 번 더 덧발라 주시면 더욱 효과적입니다.</p>
+      <p>샤워 후 적당량을 덜어 부드럽게 마사지하며 펴 발라주세요.<br>
+      건조 부위는 한 번 더 덧발라 주면 더욱 효과적입니다.</p>
     </div>
 
     <div class="section">
       <h2>💧 권장 대상</h2>
-      <p>• 건조하거나 탄력이 저하된 피부<br>
-         • 고보습 바디 크림을 찾는 분<br>
-         • 은은한 향과 윤기를 즐기고 싶은 분</p>
+      <p>• 건조 피부<br>
+         • 탄력 저하 고민<br>
+         • 리치한 고보습 케어 원하는 분</p>
     </div>
 
     <div class="price-line">💰 가격: ₩35,900</div>
@@ -180,25 +170,40 @@
   </footer>
 
   <script>
-    function addToCart() {
+/* -----------------------------------
+   🔥 WebView 완전호환 장바구니 (window.name)
+----------------------------------- */
+function addToCart() {
+  const qty = parseInt(document.getElementById('qty').value);
+  const price = 35900;
+  const name = "너리싱 바디 버터 파머그래넛";
 
-      const qty = parseInt(document.getElementById('qty').value);
-      const price = 35900;
-      const name = "너리싱 바디 버터 파머그래넛";
+  let cart = [];
 
-      let cart = JSON.parse(localStorage.getItem('healySelections') || '[]');
-      const existing = cart.find(item => item.name === name);
+  try {
+    cart = JSON.parse(window.name || "[]");
+  } catch {
+    cart = [];
+  }
 
-      if (existing) {
-        existing.qty += qty;
-        existing.total = existing.qty * existing.price;
-      } else {
-        cart.push({ name, qty, price, total: qty * price });
-      }
+  const existing = cart.find(item => item.name === name);
 
-      localStorage.setItem('healySelections', JSON.stringify(cart));
-      alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
-    }
+  if (existing) {
+    existing.qty += qty;
+    existing.total = existing.qty * existing.price;
+  } else {
+    cart.push({
+      name,
+      qty,
+      price,
+      total: qty * price
+    });
+  }
+
+  window.name = JSON.stringify(cart);
+
+  alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
+}
   </script>
 
 </body>
