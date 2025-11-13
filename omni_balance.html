@@ -48,6 +48,7 @@
       font-size: 1rem;
       margin-bottom: 1.5rem;
     }
+
     .section {
       margin-top: 2.2rem;
     }
@@ -76,10 +77,6 @@
       justify-content: center;
       align-items: center;
       gap: 10px;
-    }
-    .qty-select label {
-      color: #b65f4a;
-      font-weight: 600;
     }
     .qty-select input {
       width: 70px;
@@ -110,10 +107,6 @@
       cursor: pointer;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       transition: 0.25s;
-    }
-    .buy-btn:hover {
-      background: linear-gradient(135deg, #009173, #007a62);
-      transform: scale(1.05);
     }
   </style>
 </head>
@@ -172,64 +165,28 @@
     Powered by Healy World Korea</p>
   </footer>
 
+  <!-- 🔥 JS만 수정된 영역 -->
   <script>
-  async function addToCart() {
-    const qty = parseInt(document.getElementById('qty').value);
-    const price = 99000;
-    const name = "옴니 밸런스 360°";
-    const newItem = { name, qty, price, total: qty * price };
+    function addToCart() {
 
-    // ✅ 1. localStorage 우선 시도
-    try {
+      const qty = parseInt(document.getElementById('qty').value);
+      const price = 99000;
+      const name = "옴니 밸런스 360°";
+
       let cart = JSON.parse(localStorage.getItem('healySelections') || '[]');
       const existing = cart.find(item => item.name === name);
+
       if (existing) {
         existing.qty += qty;
         existing.total = existing.qty * existing.price;
       } else {
-        cart.push(newItem);
+        cart.push({ name, qty, price, total: qty * price });
       }
+
       localStorage.setItem('healySelections', JSON.stringify(cart));
       alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
-      return;
-    } catch (err) {
-      console.warn("localStorage 접근 불가, IndexedDB로 전환합니다.");
     }
-
-    // ✅ 2. IndexedDB fallback
-    const dbRequest = indexedDB.open("HealyCartDB", 1);
-    dbRequest.onupgradeneeded = (event) => {
-      const db = event.target.result;
-      if (!db.objectStoreNames.contains("cart")) {
-        db.createObjectStore("cart", { keyPath: "name" });
-      }
-    };
-
-    dbRequest.onsuccess = (event) => {
-      const db = event.target.result;
-      const tx = db.transaction("cart", "readwrite");
-      const store = tx.objectStore("cart");
-
-      const getReq = store.get(name);
-      getReq.onsuccess = () => {
-        const existing = getReq.result;
-        if (existing) {
-          existing.qty += qty;
-          existing.total = existing.qty * existing.price;
-          store.put(existing);
-        } else {
-          store.add(newItem);
-        }
-        alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
-      };
-    };
-
-    dbRequest.onerror = () => {
-      alert("⚠️ 저장 오류: 주문서 담기 기능을 사용할 수 없습니다.");
-    };
-  }
-</script>
-
+  </script>
 
 </body>
 </html>
