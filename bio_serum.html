@@ -193,13 +193,23 @@
   </footer>
 
   <script>
+    /* -----------------------------------
+       🔥 WebView 완전호환 장바구니 (window.name)
+    ----------------------------------- */
     function addToCart() {
-
       const qty = parseInt(document.getElementById('qty').value);
       const price = 72500;
       const name = "너리싱 세럼";
 
-      let cart = JSON.parse(localStorage.getItem('healySelections') || '[]');
+      let cart = [];
+
+      // 기존 cart 불러오기
+      try {
+        cart = JSON.parse(window.name || "[]");
+      } catch {
+        cart = [];
+      }
+
       const existing = cart.find(item => item.name === name);
 
       if (existing) {
@@ -209,7 +219,9 @@
         cart.push({ name, qty, price, total: qty * price });
       }
 
-      localStorage.setItem('healySelections', JSON.stringify(cart));
+      // 저장
+      window.name = JSON.stringify(cart);
+
       alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
     }
   </script>
