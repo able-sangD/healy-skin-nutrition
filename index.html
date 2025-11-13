@@ -31,7 +31,6 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
     }
 
-    /* 초기화 버튼 – 오렌지 계열 */
     .summary-btns button:nth-child(1) {
       background: linear-gradient(135deg, #ffb07c, #ff8b4c);
     }
@@ -41,7 +40,6 @@
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
     }
 
-    /* 이미지 저장 버튼 – 하늘색 계열 */
     .summary-btns button:nth-child(2) {
       background: linear-gradient(135deg, #7cc9ff, #4aaaff);
     }
@@ -75,7 +73,6 @@
       text-align: center;
     }
 
-    /* 주문서 박스 */
     .summary-box {
       display: none;
       width: 90%;
@@ -88,7 +85,6 @@
       text-align: center;
     }
 
-    /* 테이블 균형 */
     #summaryTable {
       width: 100%;
       border-collapse: collapse;
@@ -173,9 +169,9 @@
   </section>
 
   <script>
-    // --------------------------------------
-    // 🔥 외부 cart.js가 WebView에서 로드되지 않을 때 사용되는 내부 백업 로직
-    // --------------------------------------
+    /* -------------------------------
+       🔥 backup storage (window.name)
+    --------------------------------*/
     function getCartItems() {
       try {
         return JSON.parse(window.name || "[]");
@@ -184,33 +180,23 @@
       }
     }
 
-    function saveCartItems(cart) {
-      window.name = JSON.stringify(cart);
-    }
-
     function clearCart() {
       window.name = "[]";
     }
 
-    // --------------------------------------
-    // 🔥 날짜 함수
-    // --------------------------------------
+    /* 날짜 */
     function getToday() {
       const now = new Date();
       return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
     }
 
-    // --------------------------------------
-    // 🔥 이름 입력
-    // --------------------------------------
+    /* 이름 입력 */
     document.getElementById("buyerName").addEventListener("input", () => {
       window.buyerName = document.getElementById("buyerName").value.trim();
       document.getElementById("buyerInfo").textContent = `주문자: ${window.buyerName || ""}`;
     });
 
-    // --------------------------------------
-    // 🔥 주문서 로딩
-    // --------------------------------------
+    /* 주문서 로딩 */
     function loadSelections() {
       const cart = getCartItems();
 
@@ -232,11 +218,11 @@
       cart.forEach(item => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
-      <td>${item.name}</td>
-      <td>${item.qty}</td>
-      <td>₩${item.price.toLocaleString()}</td>
-      <td>₩${item.total.toLocaleString()}</td>
-    `;
+          <td>${item.name}</td>
+          <td>${item.qty}</td>
+          <td>₩${item.price.toLocaleString()}</td>
+          <td>₩${item.total.toLocaleString()}</td>
+        `;
         tbody.appendChild(tr);
         total += item.total;
       });
@@ -245,36 +231,35 @@
       summaryBox.style.display = "block";
     }
 
-    // --------------------------------------
-    // 🔥 선택 초기화
-    // --------------------------------------
+    /* 선택 초기화 */
     function clearSelections() {
       clearCart();
       loadSelections();
     }
 
-    // --------------------------------------
-    // 🔥 이미지 저장
-    // --------------------------------------
+    /* 이미지 저장 (WebView 호환 옵션 적용) */
     function saveSummary() {
       const target = document.getElementById("summary");
       const buyerName = window.buyerName || "healy_order";
 
-      html2canvas(target, { scale: 2 }).then(canvas => {
-        const link = document.createElement("a");
-        link.download = `${buyerName}_주문서.png`;
-        link.href = canvas.toDataURL("image/png");
-        link.click();
+      html2canvas(target, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true
+      }).then(canvas => {
+        try {
+          const link = document.createElement("a");
+          link.download = `${buyerName}_주문서.png`;
+          link.href = canvas.toDataURL("image/png");
+          link.click();
+        } catch (e) {
+          alert("⚠️ WebView에서 이미지 다운로드가 제한되었습니다.\n대신 스크린샷을 이용해주세요.");
+        }
       });
     }
 
-    // --------------------------------------
-    // 🔥 페이지 로드시 주문서 표시
-    // --------------------------------------
     window.onload = loadSelections;
   </script>
 
-
 </body>
-
 </html>
