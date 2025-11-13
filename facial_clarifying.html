@@ -175,38 +175,42 @@
   </footer>
 
   <script>
-    /* -----------------------------------
-       🔥 WebView 완전호환 장바구니 (window.name)
-    ----------------------------------- */
-    function addToCart() {
-      const qty = parseInt(document.getElementById('qty').value);
-      const price = 79000;
-      const name = "클래리파잉 머드 마스크";
+/* -----------------------------------
+   🔥 WebView 안정 버전 장바구니
+----------------------------------- */
+function addToCart() {
+  const qty = parseInt(document.getElementById('qty').value);
+  const price = 79000;
 
-      let cart = [];
+  // 저장용 (영문)
+  const id = "clarifying_mud_mask";
 
-      // 기존 cart 불러오기
-      try {
-        cart = JSON.parse(window.name || "[]");
-      } catch {
-        cart = [];
-      }
+  // 화면표시용 (한글)
+  const name = "클래리파잉 머드 마스크";
 
-      const existing = cart.find(item => item.name === name);
+  let cart = [];
 
-      if (existing) {
-        existing.qty += qty;
-        existing.total = existing.qty * existing.price;
-      } else {
-        cart.push({ name, qty, price, total: qty * price });
-      }
+  try {
+    cart = JSON.parse(window.name || "[]");
+  } catch {
+    cart = [];
+  }
 
-      // 저장
-      window.name = JSON.stringify(cart);
+  const existing = cart.find(item => item.id === id);
 
-      alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
-    }
-  </script>
+  if (existing) {
+    existing.qty += qty;
+    existing.total = existing.qty * existing.price;
+  } else {
+    cart.push({ id, name, qty, price, total: qty * price });
+  }
+
+  window.name = JSON.stringify(cart);
+
+  alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
+}
+</script>
+
 
 </body>
 </html>
