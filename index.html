@@ -6,10 +6,10 @@
   <title>Healy Skin & Nutrition</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
   <style>
     .main-header { margin-bottom: 1rem; }
 
-    /* 이름 입력 */
     .name-box {
       width: 90%;
       max-width: 480px;
@@ -36,13 +36,7 @@
       font-size: 0.95rem;
       transition: 0.2s;
     }
-    .name-box input:focus {
-      outline: none;
-      border-color: #d18874;
-      box-shadow: 0 0 4px rgba(209,136,116,0.3);
-    }
 
-    /* 주문서 */
     .summary-box {
       display: none;
       width: 90%;
@@ -58,39 +52,31 @@
       color: #b65f4a;
       margin-bottom: 0.3rem;
     }
-    .buyer-line {
-      color: #555;
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-    }
-    .date-line {
-      color: #777;
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-    }
-    .summary-box table {
+
+    #summaryTable {
       width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 1rem;
-      font-size: 0.95rem;
-      color: #555;
-    }
-    .summary-box th, .summary-box td {
-      padding: 8px;
-      border-bottom: 1px solid #eee;
-    }
-    .summary-box th {
-      background: #fff5f3;
-      color: #b65f4a;
-      font-weight: 600;
-    }
-    .summary-total {
-      font-weight: 700;
-      color: #b65f4a;
-      font-size: 1.1rem;
+      table-layout: fixed;
       margin-top: 0.5rem;
     }
+    #summaryTable th,
+    #summaryTable td {
+      padding: 8px 6px;
+      font-size: 0.9rem;
+    }
+    #summaryTable th:nth-child(1),
+    #summaryTable th:nth-child(2),
+    #summaryTable td:nth-child(1),
+    #summaryTable td:nth-child(2) {
+      text-align: center;
+    }
+    #summaryTable th:nth-child(3),
+    #summaryTable th:nth-child(4),
+    #summaryTable td:nth-child(3),
+    #summaryTable td:nth-child(4) {
+      text-align: right;
+      padding-right: 10px;
+    }
+
     .summary-btns {
       margin-top: 1.2rem;
       display: flex;
@@ -106,11 +92,11 @@
       font-weight: 600;
       cursor: pointer;
       transition: 0.25s;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    .summary-btns button:hover {
-      background: linear-gradient(135deg, #d18874, #b65f4a);
-      transform: scale(1.05);
+
+    /* 주문자 라벨 숨기기용 */
+    #buyerInfo.hidden {
+      display: none;
     }
   </style>
 </head>
@@ -121,7 +107,6 @@
     <p>자연과 주파수가 만나는 뷰티 & 웰빙 케어</p>
   </header>
 
-  <!-- 카테고리 선택 -->
   <main class="main-menu">
     <a href="nutrition.html" class="menu-card">
       <img src="assets/img/nutrition_main.png" alt="힐리 뉴트리션">
@@ -136,16 +121,14 @@
     </a>
   </main>
 
-  <!-- 이름 입력 -->
   <div class="name-box">
     <label for="buyerName">이름:</label>
     <input type="text" id="buyerName" placeholder="이름을 입력하세요">
   </div>
 
-  <!-- 주문서 -->
   <section id="summary" class="summary-box">
     <h2>🧾 주문서</h2>
-    <div class="buyer-line" id="buyerInfo">주문자: -</div>
+    <div class="buyer-line hidden" id="buyerInfo"></div>
     <div class="date-line" id="todayDate">주문일: -</div>
 
     <table id="summaryTable">
@@ -169,114 +152,104 @@
   </section>
 
   <footer>
-    <p>© 2025 힐리 스킨케어 & 뉴트리션 | 김영숙 · 포항<br>
-    Inspired by Healy World Korea</p>
+    <p>© 2025 힐리 스킨케어 & 뉴트리션 | 김영숙 · 포항</p>
   </footer>
 
-  <script>
-  // 오늘 날짜 자동 표시
-  function getToday() {
-    const now = new Date();
-    const y = now.getFullYear();
-    const m = String(now.getMonth() + 1).padStart(2, '0');
-    const d = String(now.getDate()).padStart(2, '0');
-    return `${y}-${m}-${d}`;
+<script>
+function getToday() {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+}
+
+/* 이름 저장 */
+document.getElementById("buyerName").addEventListener("input", () => {
+  const name = document.getElementById("buyerName").value.trim();
+  window.buyerName = name;
+
+  const buyerInfo = document.getElementById("buyerInfo");
+
+  if (name) {
+    buyerInfo.textContent = `주문자: ${name}`;
+    buyerInfo.classList.remove("hidden");
+  } else {
+    buyerInfo.textContent = "";
+    buyerInfo.classList.add("hidden");
+  }
+});
+
+/* 장바구니 로드 */
+function loadSelections() {
+
+  let cart = [];
+  try {
+    if (typeof window.name === "string" && window.name.trim() !== "") {
+      cart = JSON.parse(window.name);
+    }
+  } catch {
+    cart = [];
   }
 
-  // ✅ 데이터 로드 (sessionStorage 우선)
-  async function loadSelections() {
-    let data = [];
-    try {
-      data = JSON.parse(sessionStorage.getItem('healySelections') || '[]');
-      if (data.length === 0) {
-        data = JSON.parse(localStorage.getItem('healySelections') || '[]');
-      }
-    } catch (err) {
-      console.warn("스토리지 접근 오류:", err);
-    }
+  const tbody = document.querySelector("#summaryTable tbody");
+  const totalDisplay = document.getElementById("summaryTotal");
+  const summaryBox = document.getElementById("summary");
+  const buyerInfo = document.getElementById("buyerInfo");
 
-    const buyerName = sessionStorage.getItem('buyerName') || localStorage.getItem('buyerName') || '';
-    const tableBody = document.querySelector('#summaryTable tbody');
-    const totalDisplay = document.getElementById('summaryTotal');
-    const nameDisplay = document.getElementById('buyerInfo');
-    const dateDisplay = document.getElementById('todayDate');
+  tbody.innerHTML = "";
+  let total = 0;
 
-    tableBody.innerHTML = '';
-    let total = 0;
+  document.getElementById("todayDate").textContent = `주문일: ${getToday()}`;
 
-    nameDisplay.textContent = buyerName ? `주문자: ${buyerName}` : '주문자: -';
-    dateDisplay.textContent = `작성일: ${getToday()}`;
-
-    if (data.length === 0) {
-      document.getElementById('summary').style.display = 'none';
-      return;
-    }
-
-    data.forEach(item => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${item.name}</td>
-        <td>${item.qty}</td>
-        <td>₩${item.price.toLocaleString()}</td>
-        <td>₩${item.total.toLocaleString()}</td>
-      `;
-      tableBody.appendChild(tr);
-      total += item.total;
-    });
-
-    totalDisplay.textContent = `총 합계: ₩${total.toLocaleString()}`;
-    document.getElementById('summary').style.display = 'block';
+  if (window.buyerName) {
+    buyerInfo.textContent = `주문자: ${window.buyerName}`;
+    buyerInfo.classList.remove("hidden");
+  } else {
+    buyerInfo.textContent = "";
+    buyerInfo.classList.add("hidden");
   }
 
-  // 이름 입력 시 저장 및 주문서 반영
-  document.getElementById('buyerName').addEventListener('input', (e) => {
-    const name = e.target.value.trim();
-    sessionStorage.setItem('buyerName', name);
-    localStorage.setItem('buyerName', name);
-    document.getElementById('buyerInfo').textContent = `주문자: ${name || '-'}`;
+  if (cart.length === 0) {
+    summaryBox.style.display = "none";
+    return;
+  }
+
+  cart.forEach(item => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${item.name}</td>
+      <td>${item.qty}</td>
+      <td>₩${item.price.toLocaleString()}</td>
+      <td>₩${item.total.toLocaleString()}</td>
+    `;
+    tbody.appendChild(tr);
+    total += item.total;
   });
 
-  // 초기화
-  function clearSelections() {
-    // 1️⃣ 화면 즉시 반영
-    document.querySelector('#summaryTable tbody').innerHTML = '';
-    document.getElementById('summaryTotal').textContent = '';
-    document.getElementById('summary').style.display = 'none';
-    alert("선택이 초기화되었습니다.");
+  totalDisplay.textContent = `총 합계: ₩${total.toLocaleString()}`;
+  summaryBox.style.display = "block";
+}
 
-    // 2️⃣ 모든 스토리지 즉시 초기화
-    sessionStorage.removeItem('healySelections');
-    localStorage.removeItem('healySelections');
+/* 초기화 */
+function clearSelections() {
+  window.name = "";
+  alert("선택이 초기화되었습니다.");
+  loadSelections();
+}
 
-    // 3️⃣ IndexedDB는 백그라운드에서 정리
-    try {
-      const req = indexedDB.open("HealyCartDB", 1);
-      req.onsuccess = (e) => {
-        const db = e.target.result;
-        const tx = db.transaction("cart", "readwrite");
-        tx.objectStore("cart").clear();
-      };
-    } catch (err) {
-      console.warn("IndexedDB 초기화 중 오류:", err);
-    }
-  }
+/* 이미지 저장 */
+function saveSummary() {
+  const target = document.getElementById("summary");
+  const buyerName = window.buyerName || "healy_order";
 
-  // 이미지 저장
-  function saveSummary() {
-    const target = document.getElementById('summary');
-    const buyerName = sessionStorage.getItem('buyerName') || localStorage.getItem('buyerName') || 'healy_order';
-    html2canvas(target, { scale: 2, useCORS: true }).then(canvas => {
-      const link = document.createElement('a');
-      link.download = `${buyerName}_주문서.png`;
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    });
-  }
+  html2canvas(target, { scale: 2 }).then(canvas => {
+    const link = document.createElement("a");
+    link.download = `${buyerName}_주문서.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  });
+}
 
-  // ✅ 페이지 진입 시 sessionStorage 우선 로드
-  window.onload = loadSelections;
+window.onload = loadSelections;
 </script>
-
 
 </body>
 </html>
