@@ -181,25 +181,38 @@
   </footer>
 
   <script>
-    function addToCart() {
-      const qty = parseInt(document.getElementById('qty').value);
-      const price = 34500;
-      const name = "솔트 앤 오일 스크럽 파머그래넛";
+/* -----------------------------------
+   🔥 WebView 완전호환 장바구니 (window.name)
+----------------------------------- */
+function addToCart() {
+  const qty = parseInt(document.getElementById('qty').value);
+  const price = 34500;
+  const name = "솔트 앤 오일 스크럽 파머그래넛";
 
-      let cart = JSON.parse(localStorage.getItem('healySelections') || '[]');
-      const existing = cart.find(item => item.name === name);
+  let cart = [];
 
-      if (existing) {
-        existing.qty += qty;
-        existing.total = existing.qty * existing.price;
-      } else {
-        cart.push({ name, qty, price, total: qty * price });
-      }
+  // 기존 cart 불러오기
+  try {
+    cart = JSON.parse(window.name || "[]");
+  } catch {
+    cart = [];
+  }
 
-      localStorage.setItem('healySelections', JSON.stringify(cart));
-      alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
-    }
-  </script>
+  const existing = cart.find(item => item.name === name);
+
+  if (existing) {
+    existing.qty += qty;
+    existing.total = existing.qty * existing.price;
+  } else {
+    cart.push({ name, qty, price, total: qty * price });
+  }
+
+  // 저장
+  window.name = JSON.stringify(cart);
+
+  alert(`✅ ${name} ${qty}개가 주문서에 추가되었습니다.`);
+}
+</script>
 
 </body>
 </html>
